@@ -507,6 +507,26 @@ section.seteuk h2 { color: var(--secondary); border-bottom-color: #D5E0F2; }
 .status-pill.ok { background: var(--success-bg); color: #3E7A49; }
 .status-pill.no { background: var(--error-bg); color: var(--error); }
 
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 32px;
+  transform: translate(-50%, 20px);
+  background: var(--text);
+  color: #fff;
+  font-family: 'Jua', sans-serif;
+  padding: 10px 20px;
+  border-radius: 999px;
+  box-shadow: var(--shadow-hover);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s, transform 0.2s;
+  z-index: 200;
+  max-width: calc(100% - 32px);
+  text-align: center;
+}
+.toast.show { opacity: 1; transform: translate(-50%, 0); }
+
 footer.site {
   text-align: center;
   color: var(--text-light);

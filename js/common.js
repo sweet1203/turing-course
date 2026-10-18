@@ -19,7 +19,6 @@
       ["lesson3.html", "3", "3차시"],
       ["lesson4.html", "4", "4차시"],
       ["lesson5.html", "5", "5차시"],
-      ["teacher.html", "teacher", "교사용 안내"],
     ];
     const notice = document.createElement("div");
     notice.className = "refresh-notice";
@@ -30,10 +29,40 @@
     nav.innerHTML = `<div class="nav-inner">
       <a href="index.html" class="logo">🤖 나만의 튜링 챗봇</a>
       <div class="nav-links">${links.map(([href, key, label]) =>
-        `<a href="${href}" class="${key === page ? "active" : ""} ${key === "teacher" ? "teacher" : ""}">${label}</a>`).join("")}</div>
+        `<a href="${href}" class="${key === page ? "active" : ""}">${label}</a>`).join("")}</div>
     </div>`;
     document.body.prepend(nav);
     document.body.prepend(notice);
+    initHiddenTeacherMenu(nav.querySelector(".logo"));
+  }
+
+  // ── 숨긴 메뉴: 교사용 안내 ──
+  // ① 왼쪽 위 로고를 빠르게 5번 클릭  ② 입력칸 밖에서 키보드로 teacher 입력
+  function initHiddenTeacherMenu(logo) {
+    const go = () => { location.href = "teacher.html"; };
+    let clicks = 0, timer;
+    logo.addEventListener("click", (e) => {
+      e.preventDefault();
+      clicks += 1;
+      clearTimeout(timer);
+      if (clicks >= 5) { clicks = 0; return go(); }
+      // 한 번만 누른 경우에는 잠시 뒤 평소처럼 홈으로 이동한다.
+      timer = setTimeout(() => {
+        if (clicks < 3) location.href = logo.getAttribute("href");
+        clicks = 0;
+      }, 450);
+    });
+    const secret = "teacher";
+    let typed = "";
+    document.addEventListener("keydown", (e) => {
+      const t = e.target;
+      if (t && (t.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName))) return;
+      // 한글 입력 상태여도 같은 자판 위치를 읽도록 e.code(KeyT 등)를 쓴다.
+      const m = /^Key([A-Z])$/.exec(e.code || "");
+      if (!m) return;
+      typed = (typed + m[1].toLowerCase()).slice(-secret.length);
+      if (typed === secret) go();
+    });
   }
 
   // ── STEP 체크 → 진행률 저장 ──
@@ -95,6 +124,21 @@
     });
   }
 
+  // ── 잠깐 떴다 사라지는 안내 메시지 ──
+  let toastEl, toastTimer;
+  function toast(msg) {
+    if (!toastEl) {
+      toastEl = document.createElement("div");
+      toastEl.className = "toast";
+      toastEl.setAttribute("role", "alert");
+      document.body.appendChild(toastEl);
+    }
+    toastEl.textContent = msg;
+    toastEl.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toastEl.classList.remove("show"), 2000);
+  }
+
   // ── 세특 질문 폼 ──
   // <section class="seteuk" data-lesson="1"></section> 자리에 그린다.
   function initSeteuk() {
@@ -142,9 +186,15 @@
     const areas = [...form.querySelectorAll("textarea")];
     const show = (cls, html) => { result.hidden = false; result.className = "result " + cls; result.innerHTML = html; };
 
-    if (!url) {
-      show("bad", "아직 선생님이 제출 주소를 연결하지 않았어요. 답은 이 기기에 저장되니, 먼저 써 두고 나중에 제출해도 돼요.");
-    }
+    // 세특 답은 직접 타이핑하도록 붙여넣기 · 끌어다 놓기를 막는다.
+    const blocked = (e) => { e.preventDefault(); toast("붙여넣기(Ctrl+V)는 제한되어 있어요."); };
+    areas.forEach((a) => {
+      a.addEventListener("paste", blocked);
+      a.addEventListener("drop", blocked);
+      a.addEventListener("beforeinput", (e) => {
+        if (e.inputType === "insertFromPaste" || e.inputType === "insertFromDrop") blocked(e);
+      });
+    });
 
     let timer;
     function saveDraft() {
@@ -178,7 +228,7 @@
       if (!sname) return show("bad", "이름을 써 주세요.");
       const empty = answers.findIndex((a) => a.length < 5);
       if (empty !== -1) return show("bad", `질문 ${empty + 1}의 답을 조금 더 써 주세요. (5자 이상)`);
-      if (!url) return show("bad", "아직 제출 주소가 연결되지 않았어요. 선생님께 알려 주세요. (답은 이 기기에 저장돼 있어요)");
+      if (!url) return show("bad", "지금은 제출할 수 없어요. 선생님께 알려 주세요.");
 
       const btn = form.querySelector('button[type="submit"]');
       btn.disabled = true;

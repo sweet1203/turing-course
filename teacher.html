@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Jua&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/common.css">
+<link rel="stylesheet" href="css/common.css?v=2">
 <style>
   section h2 { color: var(--secondary); }
   .toc { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
@@ -150,7 +150,7 @@
         <p>사이트 파일 중 <code>js/config.js</code>를 열어 <code>APPS_SCRIPT_URL</code>의 따옴표 안에 주소를 붙여 넣고 저장합니다.</p>
         <pre class="code"><code>APPS_SCRIPT_URL: "https://script.google.com/macros/s/AKfy…/exec",</code></pre>
         <p><b>GitHub에 올린 사이트라면:</b> 저장소에서 <code>js/config.js</code> 클릭 → 오른쪽 위 <b>✏️ 연필</b> → 주소 붙여 넣기 → <b>Commit changes</b>. 1~2분 뒤 사이트에 반영됩니다.</p>
-        <p>학생 화면의 세특 질문 칸에 있던 “아직 제출 주소를 연결하지 않았어요” 안내가 사라지면 끝! 🎉</p></div></li>
+        <p>학생 화면에서 테스트로 한 번 제출해 “제출했어요!”가 나오면 끝! 🎉</p></div></li>
     </ul>
   </section>
 
@@ -184,6 +184,18 @@
       <tr><td><a href="lesson4.html">4차시</a> 디버깅</td><td>환각, 고칠 곳 찾기, 책임 토의</td><td>판정 연습 5문항, 수정 전·후 정답률 ○× 표</td></tr>
       <tr><td><a href="lesson5.html">5차시</a> 로블록스 공개</td><td>서버·API·포트, 텍스트 필터</td><td>‘튜링다움’ 상호 평가표, 인물 AI 사용 약속</td></tr>
     </table></div>
+
+    <h3>교사용 안내 여는 법 (숨긴 메뉴)</h3>
+    <p>학생 화면이 복잡하지 않도록 <b>교사용 안내는 메뉴에 보이지 않게</b> 숨겨 두었습니다. 아래 방법 중 하나로 여세요.</p>
+    <ul>
+      <li>어느 페이지에서든 왼쪽 위 로고 <b>🤖 나만의 튜링 챗봇</b>을 <b>빠르게 5번 클릭</b></li>
+      <li>입력칸이 아닌 곳을 누른 뒤 키보드로 <code>teacher</code> 입력</li>
+      <li>주소 뒤에 직접 <code>teacher.html</code>을 붙여 열기</li>
+    </ul>
+    <p style="font-size:0.9rem;color:var(--text-light)">※ 숨긴 메뉴일 뿐 비밀번호는 아닙니다. 이 페이지에는 학생 정보가 없고, 학생 답은 선생님의 스프레드시트에만 있습니다.</p>
+
+    <h3>세특 질문 답은 직접 타이핑</h3>
+    <p>세특 질문 답 칸에서는 <b>붙여넣기(Ctrl+V)와 끌어다 놓기가 막혀 있습니다.</b> 시도하면 화면 아래에 “붙여넣기(Ctrl+V)는 제한되어 있어요.”라는 메시지가 잠깐 뜹니다. 학생이 직접 생각해서 쓰도록 하기 위한 장치입니다.</p>
 
     <h3>한 차시 수업 흐름 (권장)</h3>
     <ol>
@@ -221,7 +233,7 @@
   <!-- ⑤ 문제 해결 -->
   <section id="faq">
     <h2>⑤ 문제 해결</h2>
-    <details class="faq"><summary>학생이 “아직 제출 주소를 연결하지 않았어요”라고 해요</summary>
+    <details class="faq"><summary>학생이 제출할 때 “지금은 제출할 수 없어요”라고 나와요</summary>
       <p><code>js/config.js</code>의 <code>APPS_SCRIPT_URL</code>이 비어 있습니다. ②의 9단계를 하세요. 고친 뒤에도 그대로면 학생에게 <kbd>Ctrl</kbd>+<kbd>F5</kbd>(완전히 새로고침)를 안내하세요.</p></details>
     <details class="faq"><summary>제출했다는데 시트에 줄이 없어요</summary>
       <p>① 배포 설정의 액세스 권한이 <b>모든 사용자</b>인지 ② 주소가 <b>/exec</b>로 끝나는지 ③ ③ 연결 테스트가 성공하는지 확인하세요. 학교망에서 응답을 못 받으면 학생 화면에 “확인 메시지를 받지 못했어요”가 뜨는데, 이때도 대부분 시트에는 저장됩니다.</p></details>
@@ -241,8 +253,8 @@
 
 </div>
 <footer class="site">교사용 안내 — 나만의 튜링 챗봇 만들기 (5차시)</footer>
-<script src="js/config.js"></script>
-<script src="js/common.js"></script>
+<script src="js/config.js?v=2"></script>
+<script src="js/common.js?v=2"></script>
 <script>
 (function () {
   const $ = (id) => document.getElementById(id);
