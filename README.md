@@ -12,7 +12,7 @@
 
 1. 어느 페이지에서든 왼쪽 위 로고 **🤖 나만의 튜링 챗봇**을 **빠르게 5번 클릭**
 2. 입력칸이 아닌 곳을 한 번 누른 뒤, 키보드로 **`teacher`** 입력
-3. 주소창에 직접 입력: <https://sweet1203.github.io/turing-course/teacher.html>
+3. 주소창에 직접 입력: <https://turing-course.vercel.app/teacher.html>
 
 > 숨긴 메뉴일 뿐 비밀번호는 아닙니다. 이 페이지에는 학생 정보가 없고, 학생 답은 선생님의 스프레드시트에만 저장됩니다.
 
