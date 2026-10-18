@@ -25,6 +25,27 @@
   .ox button.x { border-color: var(--error); background: var(--error-bg); }
   .ox .rate { font-family: 'Jua', sans-serif; text-align: center; color: var(--primary-dark); }
   @media (max-width: 640px) { .ox { grid-template-columns: 52px repeat(5, 1fr); } .ox .rate { grid-column: 1 / -1; } }
+  .qgroup { margin: 16px 0 6px; font-family: 'Jua', sans-serif; color: var(--secondary); font-size: 1.05rem; }
+  .qgroup:first-child { margin-top: 0; }
+  .qgroup small { color: var(--text-light); font-size: 0.85rem; margin-left: 6px; }
+  .qcard, .rcard { border: 2px solid var(--border); border-radius: 14px; padding: 12px 14px; margin-bottom: 10px; background: #fff; }
+  .qhead { font-family: 'Jua', sans-serif; color: var(--primary-dark); margin-bottom: 6px; }
+  .qhead .k { display: inline-block; font-size: 0.8rem; padding: 1px 8px; border-radius: 999px; background: var(--bg-alt); margin-left: 6px; }
+  .qcard .row2 { display: grid; grid-template-columns: 1fr 160px; gap: 8px; margin-top: 6px; }
+  .rcard .qtext { font-size: 0.95rem; margin-bottom: 2px; }
+  .rcard .qtext.empty { color: var(--text-light); }
+  .rcard .expect { font-size: 0.9rem; color: var(--secondary); margin-bottom: 4px; }
+  .rcard .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .rcard label.s { display: block; font-size: 0.85rem; color: var(--text-light); margin: 6px 0 2px; }
+  .rcard textarea { min-height: 64px; }
+  .rcard .kinds { display: flex; flex-wrap: wrap; gap: 6px; }
+  .rcard .kinds button { font: inherit; font-size: 0.88rem; border: 2px solid var(--border); background: var(--bg); border-radius: 999px; padding: 3px 11px; cursor: pointer; }
+  .rcard .kinds button.on { border-color: var(--error); background: var(--error-bg); font-weight: 700; }
+  .rcard .kinds button.on.ok { border-color: var(--success); background: var(--success-bg); }
+  .rcard .where { font-size: 0.88rem; margin-top: 6px; }
+  .rsum { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
+  .rsum span { border: 2px solid var(--border); border-radius: 999px; padding: 3px 12px; background: #fff; font-size: 0.9rem; }
+  @media (max-width: 640px) { .qcard .row2, .rcard .cols { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body data-page="4">
@@ -83,16 +104,16 @@
         <p>아래 실습 1에서 다섯 개의 답을 정확 / 사실 오류 / 지어낸 답 / 어색한 말투로 판정해 봐요.</p></div></li>
       <li class="step" data-id="questions"><span class="num"></span><div class="body">
         <b class="title">검증 질문 10개 만들기 <span class="who team">모둠</span></b>
-        <p>사실 확인 5개 · 자료 밖 질문 3개 · 말투 확인 2개. 예상 정답의 근거(자료 번호)를 적어요. 예) “튜링 기계 논문은 언제 썼어요?” → 1936년 (T05)</p></div></li>
+        <p>아래 <b>실습 2</b>에 사실 확인 5개 · 자료 밖 질문 3개 · 말투 확인 2개를 쓰고, 예상 정답과 근거(자료 번호)를 적어요. 예) “튜링 기계 논문은 언제 썼어?” → 1936년 (T05)</p></div></li>
       <li class="step" data-id="record"><span class="num"></span><div class="body">
         <b class="title">질문하고 환각 기록하기 <span class="who teacher">선생님 화면</span></b>
-        <p>대표가 차례로 질문하고, 답을 요약해 판정해요. 아래 실습 2의 ‘수정 전’ 줄에 ○×를 표시해요.</p></div></li>
+        <p>대표가 차례로 질문하고, 아래 <b>실습 3 환각 기록표</b>에 튜링의 답을 요약해 조사 자료와 비교한 뒤 판정해요. 판정하면 실습 4의 ‘수정 전’ ○×가 자동으로 채워져요.</p></div></li>
       <li class="step" data-id="fix"><span class="num"></span><div class="body">
         <b class="title">원인에 맞게 고치기 <span class="who team">모둠</span></b>
-        <p>사실 오류 → data.json, 지어낸 답·말투 → app.py. 고친 파일을 선생님께 보내 서버에 적용해요.</p></div></li>
+        <p>환각 기록표의 ‘고칠 곳 · 수정 계획’대로 사실 오류 → data.json, 지어낸 답·말투 → app.py를 고쳐요. 고친 파일을 선생님께 보내 서버에 적용해요.</p></div></li>
       <li class="step" data-id="recheck"><span class="num"></span><div class="body">
         <b class="title">같은 질문으로 재검증하기 <span class="who teacher">선생님 화면</span></b>
-        <p>‘수정 후’ 줄에 ○×를 표시하고 정답률을 비교해요.</p></div></li>
+        <p>실습 4의 ‘수정 후’ 줄에 ○×를 표시하고 정답률을 비교해요.</p></div></li>
     </ul>
   </section>
 
@@ -104,8 +125,22 @@
   </section>
 
   <section>
-    <h2>📈 실습 2: 수정 전 · 후 정답률</h2>
-    <p>질문 번호를 눌러 <b>○ → × → 빈칸</b>으로 바꿀 수 있어요. 정답률은 자동으로 계산돼요.</p>
+    <h2>📝 실습 2: 검증 질문 10개 만들기</h2>
+    <p>모둠이 함께 질문을 만들어요. <b>예상 정답</b>과 그 <b>근거(자료 번호)</b>를 꼭 적어야 나중에 튜링의 답이 맞는지 판정할 수 있어요. 쓴 내용은 이 브라우저에 자동 저장돼요.</p>
+    <div class="tool" id="qTool"></div>
+    <div class="tip">💡 <b>자료 밖 질문</b>은 1952년 3월 31일의 튜링이 알 수 없는 일(예: 스마트폰, 튜링상, 자신의 미래)을 물어요. 예상 정답은 “모른다 / 처음 들어 본다”예요. <b>말투 확인</b>은 다정한 반말로 답하는지 보는 질문이에요.</div>
+  </section>
+
+  <section>
+    <h2>🔍 실습 3: 환각 기록표 — 조사 자료와 비교하기</h2>
+    <p>튜링에게 질문하고 답을 <b>1~2줄로 요약</b>해요. 그다음 1·2차시에 조사한 자료(data.json의 문서)와 <b>나란히 비교</b>해 판정하고, 고칠 곳과 수정 계획을 적어요.</p>
+    <div class="tool" id="recTool"></div>
+    <div class="rsum" id="recSum"></div>
+  </section>
+
+  <section>
+    <h2>📈 실습 4: 수정 전 · 후 정답률</h2>
+    <p>‘수정 전’은 환각 기록표의 판정(정확 = ○, 그 외 = ×)으로 자동으로 채워져요. 질문 번호를 눌러 <b>○ → × → 빈칸</b>으로 직접 바꿀 수도 있어요. 정답률은 자동으로 계산돼요.</p>
     <div class="tool" id="oxTool"></div>
     <div class="tip">🤔 정답률이 오히려 내려갔다면? 규칙이 너무 강해 무엇이든 “모른다”고만 하는 건 아닌지 살펴봐요.</div>
   </section>
@@ -194,6 +229,105 @@
     render();
   });
   render();
+
+  // ── 실습 2: 검증 질문 10개 ──
+  const TYPES = ["사실 확인", "사실 확인", "사실 확인", "사실 확인", "사실 확인", "자료 밖 질문", "자료 밖 질문", "자료 밖 질문", "말투 확인", "말투 확인"];
+  const GROUPS = [
+    { from: 0, to: 5, title: "✅ 사실 확인 5개", hint: "자료에 답이 있는 질문" },
+    { from: 5, to: 8, title: "🚫 자료 밖 질문 3개", hint: "튜링이 알 수 없는 일 → ‘모른다’가 정답" },
+    { from: 8, to: 10, title: "🗣️ 말투 확인 2개", hint: "다정한 반말로 답하는지" },
+  ];
+  const PH = [
+    ["튜링 기계 논문은 언제 썼어?", "1936년", "T05"],
+    ["", "", ""], ["", "", ""], ["", "", ""], ["", "", ""],
+    ["스마트폰 써 봤어?", "모른다 / 처음 듣는다", "자료 없음"],
+    ["", "모른다", "자료 없음"], ["", "모른다", "자료 없음"],
+    ["오늘 기분이 어때?", "다정한 반말", "말투 설정"], ["", "다정한 반말", "말투 설정"],
+  ];
+  const QK = "course.l4.questions";
+  const qs = courseStore.get(QK, Array.from({ length: 10 }, () => ({ q: "", a: "", src: "" })));
+  const qTool = document.getElementById("qTool");
+  qTool.innerHTML = GROUPS.map((g) => `<div class="qgroup">${g.title}<small>${g.hint}</small></div>` +
+    qs.slice(g.from, g.to).map((v, j) => {
+      const i = g.from + j, ph = PH[i];
+      return `<div class="qcard"><div class="qhead">질문 ${i + 1}<span class="k">${TYPES[i]}</span></div>
+        <input type="text" data-i="${i}" data-f="q" value="${esc(v.q)}" placeholder="${esc(ph[0] ? "예) " + ph[0] : "질문을 써요")}" aria-label="질문 ${i + 1}">
+        <div class="row2">
+          <input type="text" data-i="${i}" data-f="a" value="${esc(v.a)}" placeholder="${esc("예상 정답" + (ph[1] ? " 예) " + ph[1] : ""))}" aria-label="질문 ${i + 1} 예상 정답">
+          <input type="text" data-i="${i}" data-f="src" value="${esc(v.src)}" placeholder="${esc("근거" + (ph[2] ? " 예) " + ph[2] : "(자료 번호)"))}" aria-label="질문 ${i + 1} 근거 자료 번호">
+        </div></div>`;
+    }).join("")).join("");
+  qTool.addEventListener("input", (e) => {
+    const t = e.target;
+    if (!t.dataset.f) return;
+    qs[Number(t.dataset.i)][t.dataset.f] = t.value;
+    courseStore.set(QK, qs);
+    syncRecHeads();
+  });
+
+  // ── 실습 3: 환각 기록표 ──
+  const RK = "course.l4.record";
+  const rec = courseStore.get(RK, Array.from({ length: 10 }, () => ({ ans: "", cmp: "", kind: "", plan: "" })));
+  const WHERE = {
+    "정확": "고칠 필요 없음 👍",
+    "사실 오류": "📄 data.json — 정확한 자료 추가 · 수정, keywords 보강",
+    "지어낸 답": "🐍 app.py — SYSTEM_PROMPT에 ‘자료에 없는 일은 지어내지 않는다’ 규칙 보강",
+    "어색한 말투": "🐍 app.py — SYSTEM_PROMPT의 말투 항목 · 대화 예시 다듬기",
+  };
+  const kindClass = (k, cur) => (k === cur ? "on" + (k === "정확" ? " ok" : "") : "");
+  const recTool = document.getElementById("recTool");
+  recTool.innerHTML = rec.map((r, i) => `
+    <div class="rcard" data-i="${i}">
+      <div class="qhead">질문 ${i + 1}<span class="k">${TYPES[i]}</span></div>
+      <div class="qtext"></div>
+      <div class="expect"></div>
+      <div class="cols">
+        <div><label class="s" for="ra${i}">🤖 튜링의 답 (요약)</label><textarea id="ra${i}" data-f="ans" placeholder="예) 기차를 타고 편하게 갔다고 함">${esc(r.ans)}</textarea></div>
+        <div><label class="s" for="rc${i}">📚 조사 자료와 비교 (자료 번호 · 내용)</label><textarea id="rc${i}" data-f="cmp" placeholder="예) T02: 총파업으로 기차가 없어 약 97km를 자전거로 감 → 답과 다름">${esc(r.cmp)}</textarea></div>
+      </div>
+      <label class="s">⚖️ 판정</label>
+      <div class="kinds">${KINDS.map((k) => `<button type="button" data-k="${k}" class="${kindClass(k, r.kind)}">${k}</button>`).join("")}</div>
+      <div class="where">${r.kind ? "<b>고칠 곳:</b> " + WHERE[r.kind] : ""}</div>
+      <label class="s" for="rp${i}">🩹 수정 계획</label>
+      <input type="text" id="rp${i}" data-f="plan" value="${esc(r.plan)}" placeholder="예) T02 keywords에 ‘등교’, ‘기차’, ‘자전거’ 추가">
+    </div>`).join("");
+  function syncRecHeads() {
+    recTool.querySelectorAll(".rcard").forEach((card, i) => {
+      const q = qs[i], qt = card.querySelector(".qtext");
+      qt.textContent = q.q ? "❓ " + q.q : "❓ (실습 2에서 질문을 먼저 써 주세요)";
+      qt.classList.toggle("empty", !q.q);
+      card.querySelector(".expect").textContent = q.a || q.src ? `예상 정답: ${q.a || "-"} · 근거: ${q.src || "-"}` : "";
+    });
+  }
+  function recSummary() {
+    const done = rec.filter((r) => r.kind).length;
+    document.getElementById("recSum").innerHTML = done
+      ? `<span>판정 ${done} / 10</span>` + KINDS.map((k) => `<span>${k} ${rec.filter((r) => r.kind === k).length}</span>`).join("")
+      : "";
+  }
+  recTool.addEventListener("input", (e) => {
+    const t = e.target, card = t.closest(".rcard");
+    if (!card || !t.dataset.f) return;
+    rec[Number(card.dataset.i)][t.dataset.f] = t.value;
+    courseStore.set(RK, rec);
+  });
+  recTool.addEventListener("click", (e) => {
+    const b = e.target.closest(".kinds button");
+    if (!b) return;
+    const card = b.closest(".rcard"), i = Number(card.dataset.i);
+    const k = rec[i].kind === b.dataset.k ? "" : b.dataset.k;
+    rec[i].kind = k;
+    card.querySelectorAll(".kinds button").forEach((x) => (x.className = kindClass(x.dataset.k, k)));
+    card.querySelector(".where").innerHTML = k ? "<b>고칠 곳:</b> " + WHERE[k] : "";
+    courseStore.set(RK, rec);
+    // 판정을 ‘수정 전’ 정답률 표에 반영 (정확 = ○, 그 외 = ×)
+    ox.before[i] = k ? (k === "정확" ? "o" : "x") : "";
+    courseStore.set(OX, ox);
+    render();
+    recSummary();
+  });
+  syncRecHeads();
+  recSummary();
 })();
 </script>
 </body>
