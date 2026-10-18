@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3차시 · 튜링과 첫 대화 | 나만의 튜링 챗봇</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Jua&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/common.css">
+</head>
+<body data-page="3">
+<div class="container">
+
+  <header class="page-header">
+    <span class="badge">3차시 · 인공지능의 이해</span>
+    <h1>💬 튜링과 첫 대화: 찾아보고 답하는 AI</h1>
+    <p>튜링은 대답하기 전에 자료집을 먼저 찾아봐요. 무엇을 찾을지 예측해 봐요!</p>
+  </header>
+
+  <section>
+    <h2>🎯 오늘의 목표</h2>
+    <ul class="goals">
+      <li data-n="1">검색 후 답하기(<b>RAG</b>)의 과정을 정보 이용 탐색의 관점에서 설명할 수 있다.</li>
+      <li data-n="2">질문에 맞는 자료가 검색될지 <b>예측</b>하고 CLI 대화로 확인할 수 있다.</li>
+      <li data-n="3">언어 모델이 <b>서버</b>에서 답을 만드는 구조를 설명할 수 있다.</li>
+    </ul>
+    <div class="flow">
+      <div class="flow-step"><b>도입</b><span>암기 시험 vs 오픈북 시험, 튜링과 첫 인사</span></div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step"><b>전개</b><span>자료 예측 → CLI 대화 → 비교 → 빗나간 질문 분석</span></div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step"><b>정리</b><span>app.py = 찾기(BM25) + 말하기(EXAONE)</span></div>
+    </div>
+  </section>
+
+  <div class="intro-card">
+    <h2>💡 개념 쏙쏙</h2>
+    <div class="concept-grid">
+      <div class="concept"><span class="icon">📖</span><b>RAG (검색 증강 생성)</b><p>답하기 전에 자료집에서 관련 내용을 <b>먼저 찾아보고</b> 답하는 방식. 외워서 보는 시험이 아니라 <b>오픈북 시험</b>이에요.</p></div>
+      <div class="concept"><span class="icon">🔎</span><b>찾기: BM25</b><p>질문과 자료를 2글자 조각으로 잘라, 겹치는 조각이 많고 드문 조각일수록 높은 점수. 점수가 높은 자료를 <b>최대 2건</b> 골라요.</p></div>
+      <div class="concept"><span class="icon">🗣️</span><b>말하기: EXAONE</b><p>찾은 자료 + 역할 설명서(SYSTEM_PROMPT) + 최근 대화 6번을 모아 GPU 서버의 언어 모델에게 보내면 튜링의 답이 돌아와요.</p></div>
+    </div>
+    <div class="example">🍱 <b>비유:</b> 급식 메뉴를 물어보면 기억에 의존하지 않고 <b>식단표를 먼저 보고</b> 대답하는 친구! 그게 RAG예요. 식단표에 없는 걸 물으면? 지어내지 말고 모른다고 해야겠죠.</div>
+    <details class="faq">
+      <summary>왜 낱말을 2글자씩 잘라요? (tokenize)</summary>
+      <p>한국어는 같은 낱말에 조사가 달라붙어요. ‘자전거로’, ‘자전거를’… 통째로 비교하면 다른 말이 돼요. 2글자씩 자르면 ‘자전’, ‘전거’가 겹쳐서 조사가 달라도 찾을 수 있어요. 예) 모방게임 → 모방 · 방게 · 게임</p>
+    </details>
+    <details class="faq">
+      <summary>질문을 왜 두 번 넣어요? 2번째 자료는 언제 써요?</summary>
+      <p>app.py는 <b>지금 질문 + 지금 질문 + 직전 질문</b>으로 검색해요. 지금 질문을 더 중요하게 보고, “그럼 그때는요?” 같은 짧은 질문도 앞 맥락으로 찾기 위해서예요.</p>
+      <p>자료는 최대 2건을 쓰는데, <b>2위 자료는 1위 점수의 60% 이상일 때만</b> 써요. 흔한 낱말 하나만 겹친 엉뚱한 자료가 따라오는 걸 막기 위해서예요. 점수가 0이면 “관련 자료가 검색되지 않았다”라고 넣어요.</p>
+    </details>
+    <details class="faq">
+      <summary>서버는 뭐예요? 왜 모둠 대표만 질문해요?</summary>
+      <p>서버는 AI 모델(EXAONE)을 켜 두고 질문을 받으면 답을 돌려주는 컴퓨터예요. 선생님이 VESSL의 GPU 컴퓨터에서 켜 둬요. 이 서버는 <b>한 번에 한 질문만</b> 처리하도록 설정돼 있어서, 모둠 대표가 순서대로 질문해요.</p>
+    </details>
+  </div>
+
+  <section>
+    <h2>👣 오늘 따라 할 단계</h2>
+    <div class="progress" id="progress"><i></i></div>
+    <div class="progress-label" id="progress-label"></div>
+    <ul class="steps">
+      <li class="step" data-id="hello"><span class="num"></span><div class="body">
+        <b class="title">튜링과 첫 인사 보기 <span class="who teacher">선생님 화면</span></b>
+        <p>선생님이 터미널에서 <code>python persona-core/app.py</code>를 실행해요. 첫 대사 <i>“어서 와. 곧 법원에 가야 해서 오래는 못 있지만…”</i>이 나오면 시작!</p></div></li>
+      <li class="step" data-id="slice"><span class="num"></span><div class="body">
+        <b class="title">2글자 자르기 체험하기 <span class="who me">나</span></b>
+        <p>아래 실습 1에서 내 질문이 어떤 조각으로 잘리는지 확인해요.</p></div></li>
+      <li class="step" data-id="predict"><span class="num"></span><div class="body">
+        <b class="title">질문 5개를 정하고 검색될 자료 예측하기 <span class="who team">모둠</span></b>
+        <p>실습 2의 검색 시뮬레이터로 예측을 확인해요. 자료 목록(T01~T18)을 참고하세요.</p></div></li>
+      <li class="step" data-id="ask"><span class="num"></span><div class="body">
+        <b class="title">대표가 튜링에게 질문하고 답 기록하기 <span class="who teacher">선생님 화면</span></b>
+        <p>모둠 대표가 차례로 나와 질문해요. 나머지는 튜링의 답을 짧게 요약해 적어요.</p></div></li>
+      <li class="step" data-id="analyze"><span class="num"></span><div class="body">
+        <b class="title">빗나간 질문 분석하기 <span class="who team">모둠</span></b>
+        <p>자료가 없어서? 키워드가 없어서? 표현이 달라서? 빗나간 질문은 4차시 ‘디버깅’의 재료가 되니 꼭 남겨 둬요.</p></div></li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>✂️ 실습 1: 2글자 자르기</h2>
+    <div class="tool">
+      <label class="f">질문</label>
+      <input type="text" id="tQ" value="선생님 자전거로 학교 갔어요?" />
+      <label class="f">자료 문장</label>
+      <input type="text" id="tD" value="첫 등교 날은 총파업으로 기차가 다니지 않아 자전거로 학교까지 달렸다." />
+      <div class="result" id="tOut"></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>🔎 실습 2: 검색 시뮬레이터</h2>
+    <p>app.py와 <b>같은 규칙</b>(2글자 자르기 · BM25 · 최대 2건 · 2위는 1위의 60% 이상)으로 최종 자료집에서 자료를 찾아 줘요. 먼저 <b>예측</b>하고 확인해요!</p>
+    <div class="tool">
+      <label class="f">튜링에게 할 질문</label>
+      <input type="text" id="sQ" placeholder="예) 마라톤 좋아하세요?" />
+      <label class="f">직전 질문 (없으면 비워 두기)</label>
+      <input type="text" id="sPrev" placeholder="예) 운동 좋아하세요?" />
+      <label class="f">내 예측: 어떤 자료가 1위로 뽑힐까요?</label>
+      <select id="sPredict"><option value="">자료를 불러오는 중…</option></select>
+      <div class="btn-row"><button class="btn" type="button" id="sBtn">검색해 보기</button></div>
+      <div class="result" id="sOut" hidden></div>
+    </div>
+    <h3>📋 내 예측 기록</h3>
+    <div class="table-scroll"><table class="t" id="logTable"><thead><tr><th>질문</th><th>내 예측</th><th>실제 1위</th><th>결과</th></tr></thead><tbody></tbody></table></div>
+    <p id="logRate" class="progress-label"></p>
+    <div class="btn-row"><button class="btn ghost" type="button" id="logClear">기록 지우기</button></div>
+  </section>
+
+  <section>
+    <h2>📚 참고: 튜링 자료집 문서 목록</h2>
+    <div id="docList" class="table-scroll"><p>자료를 불러오는 중…</p></div>
+  </section>
+
+  <section class="seteuk" data-lesson="3"></section>
+
+  <nav class="pager">
+    <a href="lesson2.html"><small>← 이전 차시</small>2차시 · 튜링 자료집</a>
+    <a class="next" href="lesson4.html"><small>다음 차시 →</small>4차시 · 환각 찾고 고치기</a>
+  </nav>
+</div>
+<footer class="site">정보 · 인공지능 기초 — 나만의 튜링 챗봇 만들기 · 3/5차시</footer>
+<script src="js/config.js"></script>
+<script src="js/common.js"></script>
+<script src="js/search.js"></script>
+<script>
+(function () {
+  const $ = (id) => document.getElementById(id);
+  // 실습 1
+  function slice() {
+    const q = TuringSearch.tokenize($("tQ").value), d = TuringSearch.tokenize($("tD").value);
+    const dset = new Set(d), qset = new Set(q);
+    const hits = [...qset].filter((t) => dset.has(t));
+    $("tOut").innerHTML =
+      `<b>질문 조각:</b> ${q.map((t) => `<span class="token ${dset.has(t) ? "hit" : ""}">${esc(t)}</span>`).join("")}<br>` +
+      `<b>자료 조각:</b> ${d.map((t) => `<span class="token ${qset.has(t) ? "hit" : ""}">${esc(t)}</span>`).join("")}<br>` +
+      `<b>겹치는 조각 ${hits.length}개</b> ${hits.length ? "→ 이 자료가 검색될 가능성이 높아요!" : "→ 겹치는 조각이 없으면 점수 0이에요."}`;
+  }
+  $("tQ").addEventListener("input", slice); $("tD").addEventListener("input", slice); slice();
+
+  // 실습 2
+  const LOG = "course.l3.log";
+  let docs = [];
+  function renderLog() {
+    const log = courseStore.get(LOG, []);
+    $("logTable").querySelector("tbody").innerHTML = log.map((r) =>
+      `<tr><td>${esc(r.q)}</td><td>${esc(r.p || "-")}</td><td>${esc(r.a || "없음")}</td><td>${r.p ? (r.p === r.a ? "⭕ 적중" : "❌ 빗나감") : "-"}</td></tr>`).join("") ||
+      '<tr><td colspan="4" style="color:var(--text-light)">아직 기록이 없어요.</td></tr>';
+    const judged = log.filter((r) => r.p);
+    $("logRate").textContent = judged.length ? `예측 적중률: ${judged.filter((r) => r.p === r.a).length} / ${judged.length}` : "";
+  }
+  renderLog();
+  $("logClear").addEventListener("click", () => { courseStore.set(LOG, []); renderLog(); });
+
+  TuringSearch.load().then((loaded) => {
+    docs = loaded.docs;
+    $("sPredict").innerHTML = '<option value="">(예측 안 함)</option>' + docs.map((d) => `<option value="${esc(d.id)}">${esc(d.id)} · ${esc(d.content.slice(0, 28))}…</option>`).join("");
+    $("docList").innerHTML = `<p style="font-size:0.88rem;color:var(--text-light)">${esc(loaded.source)} · 총 ${docs.length}건</p>
+      <table class="t"><thead><tr><th style="width:60px">id</th><th>content</th><th style="width:28%">keywords</th></tr></thead><tbody>${
+      docs.map((d) => `<tr><td><b>${esc(d.id)}</b></td><td>${esc(d.content)}</td><td style="font-size:0.85rem;color:var(--text-light)">${esc(d.keywords.join(", "))}</td></tr>`).join("")}</tbody></table>`;
+  }).catch((e) => {
+    $("sPredict").innerHTML = '<option value="">자료를 불러오지 못했어요</option>';
+    $("docList").innerHTML = `<p>자료를 불러오지 못했어요. 인터넷 연결을 확인해 주세요. (${esc(e.message)})</p>`;
+  });
+
+  $("sBtn").addEventListener("click", () => {
+    const q = $("sQ").value.trim();
+    const out = $("sOut");
+    out.hidden = false;
+    if (!docs.length) { out.className = "result bad"; out.textContent = "자료를 아직 불러오지 못했어요."; return; }
+    if (!q) { out.className = "result bad"; out.textContent = "질문을 써 주세요."; return; }
+    const r = TuringSearch.search(q, $("sPrev").value.trim());
+    const top = r.chosen[0];
+    const pred = $("sPredict").value;
+    out.className = "result " + (top ? "ok" : "bad");
+    out.innerHTML = `<b>검색에 쓴 조각:</b> ${r.queryTokens.map((t) => `<span class="token">${esc(t)}</span>`).join("")}<br><br>` +
+      (r.chosen.length
+        ? r.chosen.map((d, i) => `<b>${i + 1}위 ${esc(d.id)}</b> (점수 ${d.score.toFixed(2)}) — ${esc(d.content)}`).join("<br>") +
+          (r.dropped ? `<br><small style="color:var(--text-light)">※ 2위 후보 ${esc(r.dropped.id)}(점수 ${r.dropped.score.toFixed(2)})는 1위 점수의 60%보다 낮아서 빠졌어요.</small>` : "")
+        : "🙅 겹치는 조각이 없어서 <b>“관련 자료가 검색되지 않았다”</b>가 들어가요. 튜링은 자료 없이 답해야 해요 → 환각이 생기기 쉬워요!") +
+      (pred ? `<br><br>내 예측 <b>${esc(pred)}</b> → ${top && top.id === pred ? "⭕ 적중!" : "❌ 빗나갔어요. 왜일까요?"}` : "");
+    const log = courseStore.get(LOG, []);
+    log.push({ q, p: pred, a: top ? top.id : "" });
+    courseStore.set(LOG, log.slice(-20));
+    renderLog();
+  });
+})();
+</script>
+</body>
+</html>

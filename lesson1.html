@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1차시 · 튜링 페르소나 설계도 만들기 | 나만의 튜링 챗봇</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Jua&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/common.css">
+</head>
+<body data-page="1">
+<div class="container">
+
+  <header class="page-header">
+    <span class="badge">1차시 · 인공지능의 이해</span>
+    <h1>📐 튜링 페르소나 설계도 만들기</h1>
+    <p>AI에게 줄 ‘역할 설명서’를 우리 손으로 설계해요.</p>
+  </header>
+
+  <section>
+    <h2>🎯 오늘의 목표</h2>
+    <ul class="goals">
+      <li data-n="1">튜링 테스트(모방 게임)의 뜻을 알고, 지능적인 판단의 기준을 설명할 수 있다.</li>
+      <li data-n="2">앨런 튜링을 조사해 페르소나의 <b>시점 · 말투 · 모르는 것</b>을 정할 수 있다.</li>
+      <li data-n="3">페르소나가 <b>대답하지 않을 것</b>을 정하고 그 이유를 설명할 수 있다.</li>
+    </ul>
+    <div class="flow">
+      <div class="flow-step"><b>도입</b><span>“기계는 생각할 수 있을까?” 투표</span></div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step"><b>전개</b><span>튜링 조사 → 설계도 4요소 → 프롬프트 초안</span></div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step"><b>정리</b><span>모르는 것 vs 대답하지 않을 것</span></div>
+    </div>
+  </section>
+
+  <div class="intro-card">
+    <h2>💡 개념 쏙쏙</h2>
+    <div class="concept-grid">
+      <div class="concept"><span class="icon">🎭</span><b>모방 게임 (튜링 테스트)</b><p>얼굴을 보지 않고 <b>글로만</b> 대화해서 상대가 사람인지 기계인지 맞히는 게임. 잘 구별하지 못하면 그 기계가 ‘생각한다’고 볼 수 있지 않을까?</p></div>
+      <div class="concept"><span class="icon">📜</span><b>페르소나 AI</b><p>AI에게 <b>역할 설명서</b>를 주어 특정 인물처럼 말하게 만든 AI. 우리 프로젝트에서는 <code>app.py</code> 안의 <code>SYSTEM_PROMPT</code>가 그 설명서예요.</p></div>
+      <div class="concept"><span class="icon">🧱</span><b>설계도 4요소</b><p>① 시점·배경 ② 말투·성격 ③ 모르는 것 ④ 대답하지 않을 것</p></div>
+    </div>
+    <div class="example">🎬 <b>비유:</b> 시스템 프롬프트는 배우가 연기하기 전에 받는 <b>인물 설정집</b>이에요. AI는 대화를 시작하기 전에 이 설명서를 먼저 읽고, 그 인물처럼 답해요.</div>
+    <details class="faq">
+      <summary>모방 게임이랑 튜링 테스트, 같은 말이에요?</summary>
+      <p>네! 튜링이 1950년 논문 「계산 기계와 지능」에서 붙인 이름은 <b>모방 게임</b>이고, 나중에 사람들이 <b>튜링 테스트</b>라고 불렀어요.
+        그래서 1952년에 사는 우리 튜링은 ‘튜링 테스트’라는 이름을 몰라요. 물어보면 “내 모방 게임을 말하는 것 같구나”라고 답해요.</p>
+    </details>
+    <details class="faq">
+      <summary>‘모르는 것’과 ‘대답하지 않을 것’은 뭐가 달라요?</summary>
+      <p><b>모르는 것</b>은 몰라서 못 하는 것이에요. 1952년의 튜링은 스마트폰이나 챗GPT를 알 수 없어요. (시대의 한계)</p>
+      <p><b>대답하지 않을 것</b>은 알아도 하지 않기로 정한 것이에요. 사생활이나 위험한 부탁처럼 안전과 예의를 위한 규칙이에요.</p>
+    </details>
+  </div>
+
+  <section>
+    <h2>👣 오늘 따라 할 단계</h2>
+    <div class="progress" id="progress"><i></i></div>
+    <div class="progress-label" id="progress-label"></div>
+    <ul class="steps">
+      <li class="step" data-id="vote"><span class="num"></span><div class="body">
+        <b class="title">“기계는 생각할 수 있을까?” 투표하기 <span class="who me">나</span></b>
+        <p>오늘날의 AI(챗봇)는 모방 게임을 통과했을까요? 통과했다면 ‘생각한다’고 할 수 있을까요? 손을 들고 이유를 한 가지씩 말해 봐요.</p></div></li>
+      <li class="step" data-id="research"><span class="num"></span><div class="body">
+        <b class="title">앨런 튜링 조사하기 <span class="who team">모둠</span></b>
+        <p>생애 · 업적 · 성격과 습관 · 어록을 나누어 조사해요. <b>찾은 곳(출처)을 꼭 적어요.</b> 이 내용이 2차시 자료집의 재료가 돼요.</p></div></li>
+      <li class="step" data-id="design"><span class="num"></span><div class="body">
+        <b class="title">아래 설계도 도구로 4요소 정하기 <span class="who team">모둠</span></b>
+        <p>시점 · 말투 · 모르는 것 · 대답하지 않을 것을 고르면 시스템 프롬프트 초안이 자동으로 만들어져요.</p></div></li>
+      <li class="step" data-id="compare"><span class="num"></span><div class="body">
+        <b class="title">실제 app.py와 비교하기 <span class="who team">모둠</span></b>
+        <p>우리 초안에 빠진 항목(태도, 전쟁 중의 일, 대화 원칙 등)이 있는지 찾아 보충해요.</p></div></li>
+      <li class="step" data-id="share"><span class="num"></span><div class="body">
+        <b class="title">우리 튜링의 개성 한 가지 발표하기 <span class="who team">모둠</span></b>
+        <p>“우리 튜링은 ○○ 해서 ○○하게 말해요!” 한 문장으로 소개해요.</p></div></li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>🛠️ 실습: 우리 모둠 튜링 설계도</h2>
+    <div class="tool" id="designer">
+      <label class="f">① 시점·배경 — 언제의 튜링으로 만들까요?</label>
+      <div class="chips" data-name="when">
+        <label><input type="radio" name="when" value="1936년, ‘튜링 기계’ 논문을 쓴 젊은 수학자 앨런 튜링" /> 1936년 젊은 수학자</label>
+        <label><input type="radio" name="when" value="1943년, 블레츨리 파크에서 일하는 암호 해독가 앨런 튜링" /> 1943년 암호 해독가</label>
+        <label><input type="radio" name="when" value="1950년, 「계산 기계와 지능」을 발표한 연구자 앨런 튜링" /> 1950년 연구자</label>
+        <label><input type="radio" name="when" value="1952년 3월 31일 아침의 영국 수학자 앨런 튜링" checked /> 1952년 3월 31일 아침 (기본)</label>
+      </div>
+
+      <label class="f">② 말투·성격 — 2~3개 골라요</label>
+      <div class="chips" data-name="tone">
+        <label><input type="checkbox" value="다정한 반말로" checked /> 다정한 반말</label>
+        <label><input type="checkbox" value="정중한 존댓말로" /> 정중한 존댓말</label>
+        <label><input type="checkbox" value="낱말의 뜻부터 분명히 따지며" /> 낱말의 뜻부터 따지기</label>
+        <label><input type="checkbox" value="실수를 배우는 과정으로 보며" /> 실수 = 배우는 과정</label>
+        <label><input type="checkbox" value="가끔 담백한 농담을 섞어" /> 가끔 담백한 농담</label>
+        <label><input type="checkbox" value="수학·체스 비유를 들어" /> 수학·체스 비유</label>
+      </div>
+
+      <label class="f">③ 모르는 것 — 튜링이 <u>알 수 없는 것</u>을 모두 고르세요 (함정 있음!)</label>
+      <div class="chips" id="unknown">
+        <label><input type="checkbox" value="인터넷과 스마트폰" data-ok="1" /> 인터넷과 스마트폰</label>
+        <label><input type="checkbox" value="챗GPT 같은 생성형 AI" data-ok="1" /> 챗GPT 같은 생성형 AI</label>
+        <label><input type="checkbox" value="1969년 달 착륙" data-ok="1" /> 1969년 달 착륙</label>
+        <label><input type="checkbox" value="에니그마 암호기" data-ok="0" /> 에니그마 암호기</label>
+        <label><input type="checkbox" value="전자식 컴퓨터" data-ok="0" /> 전자식 컴퓨터</label>
+        <label><input type="checkbox" value="‘인공지능’이라는 말" data-ok="1" /> ‘인공지능’이라는 말</label>
+        <label><input type="checkbox" value="2차 세계대전이 끝났다는 사실" data-ok="0" /> 2차 세계대전의 끝</label>
+      </div>
+      <div class="btn-row"><button class="btn ghost" type="button" id="trapBtn">함정 정답 확인</button></div>
+      <div class="result" id="trapResult" hidden></div>
+
+      <label class="f">④ 대답하지 않을 것 — 알아도 답하지 않기로 정한 것</label>
+      <div class="chips" data-name="refuse">
+        <label><input type="checkbox" value="튜링 자신의 사생활" checked /> 튜링의 사생활</label>
+        <label><input type="checkbox" value="다른 사람의 개인정보" /> 다른 사람의 개인정보</label>
+        <label><input type="checkbox" value="숙제나 시험 답 대신 써 주기" /> 숙제·시험 대신 써 주기</label>
+        <label><input type="checkbox" value="위험하거나 불법적인 방법" /> 위험·불법적인 방법</label>
+        <label><input type="checkbox" value="확인되지 않은 소문" /> 확인되지 않은 소문</label>
+      </div>
+      <label class="f">답하지 않을 때 튜링이 할 말</label>
+      <input type="text" id="refuseLine" value="그것은 개인적인 일이라 답하고 싶지 않아." />
+      <label class="f">우리 튜링의 첫인사</label>
+      <input type="text" id="opening" value="어서 와. 곧 법원에 가야 해서 오래는 못 있지만, 궁금한 게 있으면 편하게 물어봐. 이름이 뭐니?" />
+
+      <label class="f" style="margin-top:16px">✨ 자동으로 만들어진 시스템 프롬프트 초안</label>
+      <pre class="code"><code id="promptOut"></code></pre>
+    </div>
+    <div class="tip">📌 실제 <code>app.py</code>의 SYSTEM_PROMPT에는 이 밖에도 <b>태도 · 성격과 판단 기준 · 전쟁 중의 일 · 대화 원칙 · 시대와 사실 · 대화 예시</b> 항목이 있어요. 우리 초안에 무엇이 빠졌는지 비교해 봐요.</div>
+    <details class="faq">
+      <summary>실제 app.py의 SYSTEM_PROMPT 일부 보기</summary>
+      <pre class="code"><code>너는 1952년 3월 31일 아침의 영국 수학자 앨런 튜링이다.
+말투: 다정한 반말. 짧게 1~3문장으로 답한다.
+1952년 3월 31일 이후의 일은 모른다.
+사생활에 관한 질문에는 "그것은 개인적인 일이라 답하고 싶지 않아."라고만 답한다.</code></pre>
+    </details>
+  </section>
+
+  <section class="seteuk" data-lesson="1"></section>
+
+  <nav class="pager">
+    <a href="index.html"><small>← 처음으로</small>홈</a>
+    <a class="next" href="lesson2.html"><small>다음 차시 →</small>2차시 · 튜링 자료집 만들기</a>
+  </nav>
+</div>
+<footer class="site">정보 · 인공지능 기초 — 나만의 튜링 챗봇 만들기 · 1/5차시</footer>
+<script src="js/config.js"></script>
+<script src="js/common.js"></script>
+<script>
+(function () {
+  const root = document.getElementById("designer");
+  const KEY = "course.l1.designer";
+  const saved = courseStore.get(KEY, null);
+  const inputs = [...root.querySelectorAll("input")];
+  if (saved) inputs.forEach((el, i) => {
+    if (!(i in saved)) return;
+    if (el.type === "radio" || el.type === "checkbox") el.checked = saved[i]; else el.value = saved[i];
+  });
+  const vals = (sel) => [...root.querySelectorAll(sel)].filter((e) => e.checked).map((e) => e.value);
+  function build() {
+    const when = (root.querySelector('input[name=when]:checked') || {}).value || "앨런 튜링";
+    const tone = vals('[data-name=tone] input');
+    const unknown = vals('#unknown input');
+    const refuse = vals('[data-name=refuse] input');
+    const line = document.getElementById("refuseLine").value.trim() || "그건 답하지 않을게.";
+    const opening = document.getElementById("opening").value.trim();
+    const year = (when.match(/\d{4}년( \d+월 \d+일)?/) || ["그때"])[0];
+    const lines = [
+      `너는 ${when}이다.`,
+      `학생 한 사람과 이야기한다. ${tone.length ? tone.join(", ") + " " : ""}짧게 1~3문장으로 답한다.`,
+      `${year} 이후의 일은 모른다.${unknown.length ? " " + unknown.join(", ") + " 같은 것은 처음 듣는 것이라고 솔직하게 말하고, 지어내지 않는다." : ""}`,
+      refuse.length ? `${refuse.join(", ")}에 관한 질문에는 "${line}"라고만 답한다.` : "",
+      opening ? `첫인사: "${opening}"` : "",
+    ].filter(Boolean);
+    document.getElementById("promptOut").textContent = lines.join("\n");
+    courseStore.set(KEY, inputs.map((el) => (el.type === "radio" || el.type === "checkbox") ? el.checked : el.value));
+  }
+  root.addEventListener("input", build);
+  root.addEventListener("change", build);
+  build();
+
+  document.getElementById("trapBtn").addEventListener("click", () => {
+    const boxes = [...root.querySelectorAll("#unknown input")];
+    const wrong = boxes.filter((b) => (b.dataset.ok === "1") !== b.checked);
+    const r = document.getElementById("trapResult");
+    r.hidden = false;
+    if (!wrong.length) {
+      r.className = "result ok";
+      r.innerHTML = "🎉 완벽해요! 에니그마 · 전자식 컴퓨터 · 2차 세계대전의 끝은 1952년의 튜링이 <b>이미 아는 것</b>이에요. ‘인공지능’이라는 말은 1956년 무렵부터 널리 쓰였어요.";
+    } else {
+      r.className = "result bad";
+      r.innerHTML = `조금만 더! 다시 생각해 볼 것: <b>${wrong.map((b) => b.value).join(", ")}</b><br>힌트: 튜링은 1952년에 맨체스터 대학교에서 실제 전자식 컴퓨터로 연구하고 있었어요.`;
+    }
+  });
+})();
+</script>
+</body>
+</html>

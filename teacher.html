@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>교사용 안내 | 나만의 튜링 챗봇</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Jua&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/common.css">
+<style>
+  section h2 { color: var(--secondary); }
+  .toc { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+  .toc a { display: block; text-decoration: none; color: var(--text); background: #fff; border: 2px solid var(--border); border-radius: 16px; padding: 14px 16px; }
+  .toc a:hover { border-color: var(--secondary); }
+  .toc a b { font-family: 'Jua', sans-serif; font-weight: 400; color: var(--secondary); font-size: 1.1rem; display: block; }
+  .toc a small { color: var(--text-light); }
+  .step .num { background: var(--secondary); }
+  .shot-label { font-family: 'Jua', sans-serif; font-size: 0.82rem; color: var(--text-light); margin-top: 6px; }
+  .mock .sheet { display: grid; grid-template-columns: 40px repeat(4, 1fr); font-size: 0.8rem; }
+  .mock .sheet div { border-right: 1px solid #E3E3E3; border-bottom: 1px solid #E3E3E3; padding: 3px 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .mock .sheet .hd { background: #F8F9FA; color: #5F6368; text-align: center; }
+  .mock .sheet .h1 { background: #FFEFD9; font-weight: 700; }
+  .mock .tabs { display: flex; gap: 2px; padding: 4px 6px; background: #F1F3F4; border-top: 1px solid #D7DCE3; }
+  .mock .tabs span { padding: 2px 10px; border-radius: 4px 4px 0 0; background: #E8EAED; font-size: 0.78rem; }
+  .mock .tabs span.on { background: #fff; color: #188038; font-weight: 700; }
+</style>
+</head>
+<body data-page="teacher">
+<div class="container">
+
+  <header class="page-header">
+    <span class="badge teacher">교사용 안내</span>
+    <h1 style="color:var(--secondary)">🧑‍🏫 선생님을 위한 안내서</h1>
+    <p>처음 보는 선생님도 그대로 따라 하면 됩니다. 순서대로 진행하세요.</p>
+  </header>
+
+  <div class="toc">
+    <a href="#overview"><b>① 한눈에 보기</b><small>이 사이트로 무엇을, 어떻게 하나요?</small></a>
+    <a href="#sheet"><b>② 스프레드시트 연결</b><small>세특 질문 답을 시트로 받기 (약 15분)</small></a>
+    <a href="#test"><b>③ 연결 테스트</b><small>주소가 잘 작동하는지 이 페이지에서 확인</small></a>
+    <a href="#usage"><b>④ 사이트 사용법</b><small>수업 진행 · 학생 안내 · 결과 활용</small></a>
+    <a href="#faq"><b>⑤ 문제 해결</b><small>제출이 안 될 때, 질문을 바꿀 때</small></a>
+  </div>
+
+  <!-- ① 한눈에 보기 -->
+  <section id="overview" style="margin-top:22px">
+    <h2>① 한눈에 보기</h2>
+    <p>이 사이트는 <b>“나만의 튜링 챗봇 만들기”</b> 5차시 수업을 학생이 스스로 따라가도록 만든 코스웨어입니다.
+      각 차시 페이지에는 <b>목표 → 개념 → 따라 하기 단계 → 실습 도구 → 세특 질문 3개</b>가 순서대로 들어 있습니다.</p>
+    <div class="flow">
+      <div class="flow-step"><b>학생</b><span>차시 페이지에서 활동 후 세특 질문 3개 제출</span></div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step"><b>Apps Script</b><span>제출 내용을 받아 정리</span></div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step" style="border-color:var(--secondary);background:var(--secondary-bg)"><b>스프레드시트</b><span>1차시~5차시 탭에 학번별로 한 줄씩</span></div>
+    </div>
+    <div class="table-scroll"><table class="t">
+      <tr><th>스프레드시트 탭</th><th>열 (왼쪽부터)</th></tr>
+      <tr><td><b>1차시 ~ 5차시</b> (차시마다 한 탭)</td><td>제출시각 · 학번 · 이름 · 질문1 · 질문2 · 질문3 · 제출 횟수</td></tr>
+    </table></div>
+    <div class="tip">✔ 같은 학생이 같은 차시에 다시 제출하면 <b>새 줄이 생기지 않고 그 학생의 줄이 새 내용으로 바뀝니다.</b> ‘제출 횟수’ 칸으로 몇 번 고쳤는지 알 수 있어요.</div>
+    <h3>준비물</h3>
+    <ul>
+      <li>Google 계정 (스프레드시트를 만들 계정)</li>
+      <li>이 사이트의 파일을 고칠 수 있는 권한 (GitHub 저장소 또는 사이트 파일)</li>
+      <li>AI 서버 실습용 VESSL 계정 — 서버 실행 방법은 <a href="https://github.com/CarlosQuperman/persona-ai" target="_blank" rel="noopener">최종 실습 저장소</a>의 안내를 따르세요.</li>
+    </ul>
+  </section>
+
+  <!-- ② 스프레드시트 연결 -->
+  <section id="sheet">
+    <h2>② 스프레드시트 연결하기</h2>
+    <p>아래 9단계를 순서대로 하세요. 단계를 마치면 오른쪽 <b>‘다 했어요’</b>를 체크하면 진행 상황이 저장됩니다.</p>
+    <div class="progress" id="progress"><i></i></div>
+    <div class="progress-label" id="progress-label"></div>
+    <ul class="steps">
+      <li class="step" data-id="t1"><span class="num"></span><div class="body">
+        <b class="title">새 스프레드시트 만들기</b>
+        <p><a href="https://sheets.new" target="_blank" rel="noopener">sheets.new</a>를 열거나, Google 드라이브에서 <b>새로 만들기 → Google 스프레드시트</b>를 누릅니다.
+          왼쪽 위 ‘제목 없는 스프레드시트’를 눌러 이름을 <b>튜링 챗봇 세특 질문</b>처럼 바꿉니다.</p></div></li>
+
+      <li class="step" data-id="t2"><span class="num"></span><div class="body">
+        <b class="title">Apps Script 열기</b>
+        <p>스프레드시트 위쪽 메뉴에서 <b>확장 프로그램 → Apps Script</b>를 누릅니다. 새 탭에 코드 편집기가 열립니다.</p>
+        <div class="mock">
+          <div class="bar"><span>파일</span><span>수정</span><span>보기</span><span>삽입</span><span>서식</span><span>데이터</span><span>도구</span><span class="on">확장 프로그램</span><span>도움말</span></div>
+          <div class="menu"><div>부가기능</div><div>매크로</div><div class="on">Apps Script ←</div><div>AppSheet</div></div>
+        </div>
+        <div class="shot-label">▲ 화면 예시 (실제 화면과 글자 배치는 조금 다를 수 있어요)</div></div></li>
+
+      <li class="step" data-id="t3"><span class="num"></span><div class="body">
+        <b class="title">코드 붙여 넣고 저장하기</b>
+        <p>편집기에 이미 있는 <code>function myFunction() { … }</code>을 <b>모두 지우고</b>, 아래 코드를 <b>복사</b> 버튼으로 복사해 붙여 넣습니다.
+          <kbd>Ctrl</kbd>+<kbd>S</kbd>(또는 💾 아이콘)로 저장하고, 왼쪽 위 ‘제목 없는 프로젝트’를 <b>세특 질문 수집기</b>로 바꿉니다.</p>
+        <details class="faq">
+          <summary>📋 Apps Script 코드 펼치기 (Code.gs)</summary>
+          <pre class="code" id="gsCode"><code>코드를 불러오는 중…</code></pre>
+          <p style="font-size:0.88rem">파일로 받으려면: 사이트 폴더의 <code>apps-script/Code.gs</code></p>
+        </details></div></li>
+
+      <li class="step" data-id="t4"><span class="num"></span><div class="body">
+        <b class="title">탭 만들기 실행 (setupSheets)</b>
+        <p>편집기 위쪽의 함수 선택 칸에서 <b>setupSheets</b>를 고르고 <b>▶ 실행</b>을 누릅니다.</p>
+        <div class="mock"><div class="bar"><span>↶</span><span>↷</span><span>💾</span><span class="on">▶ 실행</span><span>🐞 디버그</span><span class="on">setupSheets ▾</span><span>실행 로그</span></div></div>
+        <p>처음 실행하면 <b>권한 검토</b> 창이 뜹니다. 아래 순서로 허용하세요.</p>
+        <ol>
+          <li><b>권한 검토</b> → 내 Google 계정 선택</li>
+          <li>“Google에서 확인하지 않은 앱” 화면이 나오면 왼쪽 아래 <b>고급</b> → <b>세특 질문 수집기(으)로 이동(안전하지 않음)</b></li>
+          <li>요청 권한 목록을 확인하고 <b>허용</b></li>
+        </ol>
+        <div class="tip">🔒 ‘안전하지 않음’이라는 말은 <b>Google이 심사하지 않은, 내가 직접 만든 스크립트</b>라는 뜻입니다. 이 코드는 이 스프레드시트에 글을 쓰는 일만 합니다.</div></div></li>
+
+      <li class="step" data-id="t5"><span class="num"></span><div class="body">
+        <b class="title">스프레드시트에서 탭 확인하기</b>
+        <p>스프레드시트 탭으로 돌아가면 아래에 <b>1차시 ~ 5차시</b> 탭이 생기고, 1행에 질문이 들어가 있습니다. (‘시트1’은 비어 있으면 자동으로 지워집니다.)</p>
+        <div class="mock">
+          <div class="sheet">
+            <div class="hd"></div><div class="hd">A</div><div class="hd">B</div><div class="hd">C</div><div class="hd">D</div>
+            <div class="hd">1</div><div class="h1">제출시각</div><div class="h1">학번</div><div class="h1">이름</div><div class="h1">질문1. 우리 모둠 튜링의 시점…</div>
+            <div class="hd">2</div><div></div><div></div><div></div><div></div>
+          </div>
+          <div class="tabs"><span class="on">1차시</span><span>2차시</span><span>3차시</span><span>4차시</span><span>5차시</span></div>
+        </div>
+        <p style="font-size:0.9rem">💡 다음부터는 스프레드시트 위쪽 <b>세특 질문</b> 메뉴에서도 탭을 다시 만들 수 있어요.</p></div></li>
+
+      <li class="step" data-id="t6"><span class="num"></span><div class="body">
+        <b class="title">웹 앱으로 배포하기</b>
+        <p>Apps Script 편집기 오른쪽 위 <b>배포 → 새 배포</b>를 누릅니다. ‘유형 선택’ 옆 <b>⚙️ 톱니</b>를 눌러 <b>웹 앱</b>을 고르고 아래처럼 설정합니다.</p>
+        <div class="mock"><div class="dialog">
+          <div class="row"><span>설명</span><b>세특 질문 v1</b></div>
+          <div class="row"><span>다음 사용자 인증 정보로 실행</span><b>나 (내 계정)</b></div>
+          <div class="row"><span>액세스 권한이 있는 사용자</span><b>모든 사용자</b></div>
+          <span class="blue-btn">배포</span>
+        </div></div>
+        <div class="warn-box">⚠️ <b>액세스 권한은 꼭 ‘모든 사용자’</b>로 하세요. 그래야 학생이 로그인하지 않고도 제출할 수 있습니다. 학교 Google Workspace 계정에서 이 항목이 보이지 않으면 아래 <a href="#faq">⑤ 문제 해결</a>을 보세요.</div></div></li>
+
+      <li class="step" data-id="t7"><span class="num"></span><div class="body">
+        <b class="title">웹 앱 주소 복사하기</b>
+        <p>배포가 끝나면 <b>웹 앱 URL</b>이 나옵니다. <b>복사</b>를 눌러 메모장에 붙여 두세요.</p>
+        <pre class="code" data-nocopy><code>https://script.google.com/macros/s/AKfy…긴 글자…/exec</code></pre>
+        <p style="font-size:0.9rem">✔ 주소 끝이 <b>/exec</b>여야 합니다. (/dev로 끝나는 주소는 선생님만 쓸 수 있는 테스트 주소예요.)</p></div></li>
+
+      <li class="step" data-id="t8"><span class="num"></span><div class="body">
+        <b class="title">이 페이지에서 연결 테스트하기</b>
+        <p>바로 아래 <a href="#test">③ 연결 테스트</a>에 주소를 붙여 넣고 <b>연결 확인</b> → <b>테스트 제출</b>을 눌러 보세요. 시트의 해당 차시 탭에 테스트 줄이 생기면 성공입니다.</p></div></li>
+
+      <li class="step" data-id="t9"><span class="num"></span><div class="body">
+        <b class="title">사이트에 주소 넣기 (js/config.js)</b>
+        <p>사이트 파일 중 <code>js/config.js</code>를 열어 <code>APPS_SCRIPT_URL</code>의 따옴표 안에 주소를 붙여 넣고 저장합니다.</p>
+        <pre class="code"><code>APPS_SCRIPT_URL: "https://script.google.com/macros/s/AKfy…/exec",</code></pre>
+        <p><b>GitHub에 올린 사이트라면:</b> 저장소에서 <code>js/config.js</code> 클릭 → 오른쪽 위 <b>✏️ 연필</b> → 주소 붙여 넣기 → <b>Commit changes</b>. 1~2분 뒤 사이트에 반영됩니다.</p>
+        <p>학생 화면의 세특 질문 칸에 있던 “아직 제출 주소를 연결하지 않았어요” 안내가 사라지면 끝! 🎉</p></div></li>
+    </ul>
+  </section>
+
+  <!-- ③ 연결 테스트 -->
+  <section id="test">
+    <h2>③ 연결 테스트</h2>
+    <p>지금 사이트에 설정된 주소: <span id="cfgState"></span></p>
+    <div class="tool">
+      <label class="f">웹 앱 주소 (…/exec)</label>
+      <input type="url" id="tUrl" placeholder="https://script.google.com/macros/s/…/exec" />
+      <div class="btn-row">
+        <button class="btn secondary" type="button" id="tPing">1. 연결 확인</button>
+        <select id="tLesson" style="width:auto"><option value="1">1차시 탭</option><option value="2">2차시 탭</option><option value="3">3차시 탭</option><option value="4">4차시 탭</option><option value="5">5차시 탭</option></select>
+        <button class="btn" type="button" id="tSend">2. 테스트 제출</button>
+      </div>
+      <div class="result" id="tOut" hidden></div>
+      <p style="font-size:0.88rem;color:var(--text-light);margin-top:8px">테스트 제출은 학번 <code>00000</code>, 이름 <code>테스트</code>로 한 줄을 씁니다. 확인한 뒤 시트에서 그 줄을 지워 주세요.</p>
+    </div>
+  </section>
+
+  <!-- ④ 사이트 사용법 -->
+  <section id="usage">
+    <h2>④ 사이트 사용법</h2>
+    <h3>사이트 구성</h3>
+    <div class="table-scroll"><table class="t">
+      <tr><th>페이지</th><th>내용</th><th>실습 도구</th></tr>
+      <tr><td><a href="index.html">홈</a></td><td>프로젝트 소개, 차시별 진행률, 학생용 사용법</td><td>-</td></tr>
+      <tr><td><a href="lesson1.html">1차시</a> 설계도</td><td>모방 게임, 페르소나 설계 4요소</td><td>설계도 → 시스템 프롬프트 자동 생성, ‘모르는 것’ 함정 퀴즈</td></tr>
+      <tr><td><a href="lesson2.html">2차시</a> 자료집</td><td>JSON 구조, 좋은 자료의 조건</td><td>문서 만들기(JSON 자동 생성), 친절한 JSON 검사기</td></tr>
+      <tr><td><a href="lesson3.html">3차시</a> 첫 대화</td><td>RAG, BM25, 서버 구조</td><td>2글자 자르기, 검색 시뮬레이터(최종 data.json · app.py와 같은 규칙), 예측 기록</td></tr>
+      <tr><td><a href="lesson4.html">4차시</a> 디버깅</td><td>환각, 고칠 곳 찾기, 책임 토의</td><td>판정 연습 5문항, 수정 전·후 정답률 ○× 표</td></tr>
+      <tr><td><a href="lesson5.html">5차시</a> 로블록스 공개</td><td>서버·API·포트, 텍스트 필터</td><td>‘튜링다움’ 상호 평가표, 인물 AI 사용 약속</td></tr>
+    </table></div>
+
+    <h3>한 차시 수업 흐름 (권장)</h3>
+    <ol>
+      <li><b>수업 시작:</b> 해당 차시 페이지 주소를 학생에게 공유합니다. (예: <code>…/lesson3.html</code>)</li>
+      <li><b>도입 · 개념:</b> ‘오늘의 목표’와 ‘개념 쏙쏙’을 함께 읽습니다. 물음표 항목(▶ 펼치기)은 궁금한 학생이 스스로 엽니다.</li>
+      <li><b>따라 하기:</b> 단계 옆 꼬리표를 보고 진행합니다. <span class="who me">나</span> 혼자 · <span class="who team">모둠</span> 함께 · <span class="who teacher">선생님 화면</span> 교사 PC에서 진행.</li>
+      <li><b>서버 단계:</b> <span class="who teacher">선생님 화면</span> 단계는 교사가 VESSL 서버를 켜고 TV에 띄워 진행합니다. 서버는 한 번에 한 질문만 처리하므로 모둠 대표가 차례로 질문합니다.</li>
+      <li><b>마무리 5분:</b> 맨 아래 <b>세특 질문 3개</b>를 쓰고 제출합니다.</li>
+    </ol>
+
+    <h3>학생 기록은 어디에 저장되나요?</h3>
+    <ul>
+      <li><b>진행 체크 · 실습 도구 · 쓰는 중인 답:</b> 학생 기기의 브라우저에만 저장됩니다. (서버로 가지 않음)</li>
+      <li><b>세특 질문 제출:</b> 선생님 스프레드시트로만 전송됩니다. 학생끼리는 서로의 답을 볼 수 없습니다.</li>
+      <li><b>공용 PC</b>를 쓰는 경우, 수업 끝에 세특 질문 칸의 <b>‘내 답 지우기’</b>를 누르도록 안내하세요. (제출한 내용은 지워지지 않습니다.)</li>
+    </ul>
+
+    <h3>세특 작성에 활용하기</h3>
+    <ul>
+      <li>차시 탭에서 <b>학번 열을 정렬</b>하면 반·번호 순으로 볼 수 있습니다.</li>
+      <li>각 질문은 <b>내가 한 일 · 원인 분석 · 개념 설명 · 생각과 태도</b>가 드러나도록 구성했습니다. 학생 답의 구체적인 사례를 근거로 활용하세요.</li>
+      <li>학번·이름은 개인정보이므로 스프레드시트 공유 설정은 <b>제한됨(나만)</b>으로 두세요.</li>
+    </ul>
+
+    <h3>내용 고치기</h3>
+    <div class="table-scroll"><table class="t">
+      <tr><th>바꾸고 싶은 것</th><th>고칠 파일</th></tr>
+      <tr><td>제출 주소, 학번 형식, 세특 질문</td><td><code>js/config.js</code> (+ 질문은 <code>Code.gs</code>도 함께)</td></tr>
+      <tr><td>차시 본문 · 단계 · 실습 도구</td><td><code>lesson1.html</code> ~ <code>lesson5.html</code></td></tr>
+      <tr><td>색 · 글꼴 · 카드 모양</td><td><code>css/common.css</code></td></tr>
+      <tr><td>검색 시뮬레이터가 읽는 자료집</td><td><code>js/search.js</code>의 <code>DATA_URLS</code> (기본: 최종 저장소의 data.json)</td></tr>
+    </table></div>
+  </section>
+
+  <!-- ⑤ 문제 해결 -->
+  <section id="faq">
+    <h2>⑤ 문제 해결</h2>
+    <details class="faq"><summary>학생이 “아직 제출 주소를 연결하지 않았어요”라고 해요</summary>
+      <p><code>js/config.js</code>의 <code>APPS_SCRIPT_URL</code>이 비어 있습니다. ②의 9단계를 하세요. 고친 뒤에도 그대로면 학생에게 <kbd>Ctrl</kbd>+<kbd>F5</kbd>(완전히 새로고침)를 안내하세요.</p></details>
+    <details class="faq"><summary>제출했다는데 시트에 줄이 없어요</summary>
+      <p>① 배포 설정의 액세스 권한이 <b>모든 사용자</b>인지 ② 주소가 <b>/exec</b>로 끝나는지 ③ ③ 연결 테스트가 성공하는지 확인하세요. 학교망에서 응답을 못 받으면 학생 화면에 “확인 메시지를 받지 못했어요”가 뜨는데, 이때도 대부분 시트에는 저장됩니다.</p></details>
+    <details class="faq"><summary>배포 화면에 ‘모든 사용자’가 없어요 (학교 Workspace 계정)</summary>
+      <p>학교 관리자가 외부 공개를 막아 둔 경우입니다. ‘○○학교 내 모든 사용자’만 보인다면 학생도 같은 학교 계정으로 로그인해야 제출할 수 있습니다. 로그인 없이 받으려면 <b>개인 Google 계정</b>으로 스프레드시트와 스크립트를 만드세요.</p></details>
+    <details class="faq"><summary>코드를 고쳤는데 반영이 안 돼요</summary>
+      <p>Apps Script는 <b>배포를 새 버전으로 바꿔야</b> 반영됩니다. <b>배포 → 배포 관리 → ✏️ 연필 → 버전: 새 버전 → 배포</b>. 이렇게 하면 주소가 그대로 유지됩니다. (‘새 배포’를 누르면 주소가 바뀌니 주의!)</p></details>
+    <details class="faq"><summary>세특 질문을 바꾸고 싶어요</summary>
+      <p>① <code>js/config.js</code>의 <code>LESSONS</code> 질문 수정 ② Apps Script의 <code>LESSONS</code> 질문도 똑같이 수정 → 저장 ③ <b>setupSheets</b> 다시 실행(1행 제목만 바뀌고 학생 답은 그대로) ④ 위의 ‘새 버전으로 배포’.</p></details>
+    <details class="faq"><summary>학번 형식이 달라요 (예: 4자리, 6자리)</summary>
+      <p><code>js/config.js</code>의 <code>STUDENT_ID_PATTERN</code>(예: <code>"^[0-9]{4,6}$"</code>)과 Apps Script의 <code>STUDENT_ID_PATTERN</code>(예: <code>/^[0-9]{4,6}$/</code>)을 같이 바꾸고 새 버전으로 배포하세요.</p></details>
+    <details class="faq"><summary>같은 학생이 여러 번 제출했어요</summary>
+      <p>정상입니다. 같은 차시에 같은 학번이면 마지막 제출 내용으로 바뀌고 ‘제출 횟수’만 늘어납니다. 다른 학생이 학번을 잘못 써서 덮어썼다면 시트의 <b>파일 → 버전 기록</b>에서 되돌릴 수 있습니다.</p></details>
+    <details class="faq"><summary>3차시 검색 시뮬레이터가 자료를 못 불러와요</summary>
+      <p>학교망에서 <code>raw.githubusercontent.com</code>이 막혀 있으면 자동으로 다른 주소(jsdelivr)로 다시 시도합니다. 둘 다 막혀 있다면 data.json을 사이트 폴더에 넣고 <code>js/search.js</code>의 <code>DATA_URLS</code> 맨 앞에 <code>"data.json"</code>을 추가하세요.</p></details>
+  </section>
+
+</div>
+<footer class="site">교사용 안내 — 나만의 튜링 챗봇 만들기 (5차시)</footer>
+<script src="js/config.js"></script>
+<script src="js/common.js"></script>
+<script>
+(function () {
+  const $ = (id) => document.getElementById(id);
+  // Code.gs 내용을 페이지에 표시 (복사 버튼은 common.js가 붙인다)
+  fetch("apps-script/Code.gs", { cache: "no-store" }).then((r) => {
+    if (!r.ok) throw new Error("HTTP " + r.status);
+    return r.text();
+  }).then((t) => { $("gsCode").querySelector("code").textContent = t; })
+    .catch(() => { $("gsCode").querySelector("code").textContent = "코드를 불러오지 못했어요. 사이트 폴더의 apps-script/Code.gs 파일을 메모장으로 열어 복사해 주세요."; });
+
+  const cfg = (window.COURSE && window.COURSE.APPS_SCRIPT_URL || "").trim();
+  $("cfgState").innerHTML = cfg ? `<span class="status-pill ok">연결됨</span> <code style="word-break:break-all">${esc(cfg)}</code>` : '<span class="status-pill no">아직 비어 있음</span>';
+  $("tUrl").value = cfg;
+  const out = $("tOut");
+  const show = (ok, html) => { out.hidden = false; out.className = "result " + (ok ? "ok" : "bad"); out.innerHTML = html; };
+  function url() {
+    const u = $("tUrl").value.trim();
+    if (!/^https:\/\/script\.google\.com\/macros\/s\/[^/]+\/exec$/.test(u)) {
+      show(false, "주소 형식을 확인하세요. <code>https://script.google.com/macros/s/…/exec</code> 모양이어야 해요.");
+      return null;
+    }
+    return u;
+  }
+  $("tPing").addEventListener("click", async () => {
+    const u = url(); if (!u) return;
+    show(true, "확인 중…");
+    try {
+      const data = await (await fetch(u)).json();
+      if (!data.ok) throw new Error(data.error || "응답 오류");
+      const ready = data.lessonsReady || [];
+      show(ready.length === 5, `✅ <b>연결 성공!</b> 스프레드시트: <b>${esc(data.spreadsheet || "")}</b><br>준비된 탭: ${ready.length ? ready.map((n) => n + "차시").join(", ") : "없음"}${ready.length < 5 ? "<br>⚠️ 탭이 부족해요. Apps Script에서 setupSheets를 실행하세요." : ""}`);
+    } catch (e) {
+      show(false, `❌ 연결하지 못했어요. 배포의 액세스 권한이 <b>모든 사용자</b>인지, 주소가 /exec로 끝나는지 확인하세요.<br><small>${esc(e.message)}</small>`);
+    }
+  });
+  $("tSend").addEventListener("click", async () => {
+    const u = url(); if (!u) return;
+    const n = Number($("tLesson").value);
+    show(true, "보내는 중…");
+    try {
+      const body = JSON.stringify({ lesson: n, studentId: "00000", studentName: "테스트", answers: ["테스트 답 1", "테스트 답 2", "테스트 답 3"] });
+      const data = await (await fetch(u, { method: "POST", body })).json();
+      if (!data.ok) throw new Error(data.error);
+      show(true, `✅ <b>${n}차시</b> 탭 ${data.row}번째 줄에 테스트 제출이 ${data.action === "updated" ? "갱신" : "저장"}됐어요. 시트에서 확인한 뒤 그 줄을 지워 주세요.`);
+    } catch (e) {
+      show(false, `❌ 제출하지 못했어요: ${esc(e.message)}${/학번 형식/.test(e.message) ? "<br>학번 형식을 바꿨다면 테스트 학번 00000이 맞지 않을 수 있어요. 학생 화면에서 직접 시험해 보세요." : ""}`);
+    }
+  });
+})();
+</script>
+</body>
+</html>

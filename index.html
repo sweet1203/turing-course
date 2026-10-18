@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>나만의 튜링 챗봇 만들기 | 정보 수업</title>
+<meta name="description" content="앨런 튜링 페르소나 챗봇을 만들고 로블록스로 연결하는 5차시 정보 수업 코스웨어">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Jua&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/common.css">
+</head>
+<body data-page="home">
+<div class="container">
+
+  <header class="page-header">
+    <h1>🤖 나만의 튜링 챗봇 만들기</h1>
+    <p>1952년의 앨런 튜링을 AI로 되살려, 로블록스 게임 속에서 대화해 봐요!</p>
+  </header>
+
+  <div class="intro-card">
+    <h2>🤔 우리는 무엇을 만들까요?</h2>
+    <p><b>앨런 튜링</b>은 “기계는 생각할 수 있을까?”라는 질문을 처음 던진 영국의 수학자예요.
+      컴퓨터의 원리(튜링 기계)를 세웠고, 오늘날 AI를 평가하는 ‘모방 게임’을 제안했어요.</p>
+    <p>우리는 5차시 동안 AI에게 <b>“너는 1952년 3월 31일 아침의 앨런 튜링이야”</b>라는 역할을 주고,
+      튜링의 삶을 담은 자료집을 만들어, <b>우리 모둠만의 튜링 챗봇</b>을 완성해요. 마지막에는 그 챗봇을 <b>로블록스 게임 속 NPC</b>로 연결해요.</p>
+    <div class="example">
+      🎮 <b>완성하면 이런 대화가 돼요</b><br>
+      나: 튜링 테스트가 뭐예요?<br>
+      튜링(NPC): 그런 이름은 처음 듣지만 내 모방 게임을 말하는 것 같구나. 글로만 대화해서 상대가 사람인지 기계인지 맞히는 놀이야.
+    </div>
+  </div>
+
+  <div class="menu-grid" id="menu">
+    <a href="lesson1.html" class="menu-card" data-n="1">
+      <div class="no">1차시</div><span class="icon">📐</span>
+      <div class="title">튜링 페르소나<br>설계도 만들기</div>
+      <div class="desc">언제의 튜링으로, 어떤 말투로? 모르는 것과 대답하지 않을 것 정하기</div>
+      <div class="bar"><i></i></div>
+    </a>
+    <a href="lesson2.html" class="menu-card" data-n="2">
+      <div class="no">2차시</div><span class="icon">📚</span>
+      <div class="title">튜링 자료집<br>data.json 만들기</div>
+      <div class="desc">튜링의 ‘기억’이 될 자료를 JSON으로 정리하기</div>
+      <div class="bar"><i></i></div>
+    </a>
+    <a href="lesson3.html" class="menu-card" data-n="3">
+      <div class="no">3차시</div><span class="icon">💬</span>
+      <div class="title">튜링과 첫 대화<br>찾아보고 답하는 AI</div>
+      <div class="desc">자료를 찾아서 답하는 RAG를 직접 확인하기</div>
+      <div class="bar"><i></i></div>
+    </a>
+    <a href="lesson4.html" class="menu-card" data-n="4">
+      <div class="no">4차시</div><span class="icon">🔧</span>
+      <div class="title">튜링 디버깅<br>환각 찾고 고치기</div>
+      <div class="desc">AI가 지어낸 말을 찾아 근거로 고치기</div>
+      <div class="bar"><i></i></div>
+    </a>
+    <a href="lesson5.html" class="menu-card" data-n="5">
+      <div class="no">5차시</div><span class="icon">🎮</span>
+      <div class="title">로블록스 NPC 공개<br>상호 평가</div>
+      <div class="desc">우리 튜링을 게임에 연결하고 서로 평가하기</div>
+      <div class="bar"><i></i></div>
+    </a>
+  </div>
+
+  <section>
+    <h2>🧩 걱정 마세요! 어려운 건 선생님이 해요</h2>
+    <p>AI 모델은 아주 큰 컴퓨터(GPU)에서 돌아가요. 이 컴퓨터를 켜고 서버를 실행하는 일은 <b>선생님 화면</b>에서 해요.
+      우리는 <b>설계하고, 자료를 쓰고, 질문하고, 고치는 일</b>에 집중하면 돼요.</p>
+    <div class="concept-grid">
+      <div class="concept"><span class="icon">🙋</span><b>우리가 하는 일</b><p>튜링 조사 · 설계도 쓰기 · 자료집(data.json) 만들기 · 질문하고 답 판정하기 · 고친 내용 확인 · 서로 평가</p></div>
+      <div class="concept"><span class="icon">🧑‍🏫</span><b>선생님이 하는 일</b><p>GPU 컴퓨터(VESSL) 켜기 · AI 모델 서버 실행 · 모둠 파일 적용 · 웹 채팅과 로블록스 화면 띄우기</p></div>
+      <div class="concept"><span class="icon">🖥️</span><b>화면에 표시된 꼬리표</b><p><span class="who me">나</span> 혼자 하는 일 · <span class="who team">모둠</span> 함께 하는 일 · <span class="who teacher">선생님 화면</span> 선생님 컴퓨터에서 하는 일</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>🗺️ 하나의 두뇌, 세 개의 창</h2>
+    <p>우리가 만든 튜링은 <b>하나</b>예요. 같은 튜링을 세 가지 화면에서 만날 수 있어요.</p>
+    <div class="flow">
+      <div class="flow-step"><b>⌨️ 터미널</b><span>글자로 대화 (3·4차시)</span></div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step"><b>🌐 웹 채팅</b><span>브라우저 채팅 화면 (5차시)</span></div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step" style="border-color: var(--primary); background: var(--bg-alt);"><b>🎮 로블록스</b><span>게임 속 NPC 말풍선 (5차시)</span></div>
+    </div>
+    <p style="font-size:0.92rem;color:var(--text-light);margin-top:10px">💡 그래서 4차시에 고친 내용이 웹과 로블록스에도 그대로 반영돼요.</p>
+  </section>
+
+  <section>
+    <h2>📌 이 사이트 사용법</h2>
+    <ol>
+      <li>선생님이 알려 준 <b>차시 페이지</b>를 열어요. (위쪽 메뉴의 1~5차시)</li>
+      <li>각 단계를 마치면 오른쪽의 <b>‘다 했어요’</b>를 체크해요. 진행률이 저장돼요.</li>
+      <li>페이지 안의 <b>실습 도구</b>로 직접 해 봐요. 쓴 내용은 이 기기에 자동 저장돼요.</li>
+      <li>수업 끝에는 맨 아래 <b>📝 세특 질문 3개</b>에 답하고 <b>제출하기</b>를 눌러요.</li>
+    </ol>
+    <div class="tip">🔒 학번·이름·답은 선생님의 스프레드시트에만 저장되고 친구들에게는 보이지 않아요. 다시 제출하면 마지막 내용으로 바뀌어요.</div>
+  </section>
+
+  <div class="cta">
+    <h3>🚀 준비됐나요? 1차시부터 시작해요!</h3>
+    <p>“기계는 생각할 수 있을까?” 튜링의 질문에서 출발해요.</p>
+    <a class="btn" href="lesson1.html">📐 1차시 시작하기</a>
+  </div>
+</div>
+<footer class="site">정보 · 인공지능 기초 — 나만의 튜링 챗봇 만들기 (5차시)</footer>
+<script src="js/config.js"></script>
+<script src="js/common.js"></script>
+<script>
+  // 차시별 진행률 막대
+  document.querySelectorAll(".menu-card[data-n]").forEach((card) => {
+    const pct = window.courseStore ? window.courseStore.get(`course.percent.${card.dataset.n}`, 0) : 0;
+    card.querySelector(".bar i").style.width = pct + "%";
+  });
+</script>
+</body>
+</html>

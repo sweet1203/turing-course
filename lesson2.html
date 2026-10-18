@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2차시 · 튜링 자료집 data.json 만들기 | 나만의 튜링 챗봇</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Jua&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/common.css">
+</head>
+<body data-page="2">
+<div class="container">
+
+  <header class="page-header">
+    <span class="badge">2차시 · 인공지능과 학습</span>
+    <h1>📚 튜링 자료집 data.json 만들기</h1>
+    <p>튜링의 ‘기억’이 될 자료를 정확하게 정리해요.</p>
+  </header>
+
+  <section>
+    <h2>🎯 오늘의 목표</h2>
+    <ul class="goals">
+      <li data-n="1">페르소나에 필요한 자료를 고르고 <b>출처를 확인</b>해 모을 수 있다.</li>
+      <li data-n="2">모은 자료를 <b>id · content · keywords</b> 구조의 JSON으로 정리할 수 있다.</li>
+      <li data-n="3">검색이 잘 되도록 자료마다 <b>핵심 키워드</b>를 뽑을 수 있다.</li>
+    </ul>
+    <div class="flow">
+      <div class="flow-step"><b>도입</b><span>자료 없이 vs 자료와 함께 답한 결과 비교</span></div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step"><b>전개</b><span>주제 나누기 → 3인칭 문장 → 키워드 → 검사</span></div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step"><b>정리</b><span>문서 1건 발표, 출처의 중요성</span></div>
+    </div>
+  </section>
+
+  <div class="intro-card">
+    <h2>💡 개념 쏙쏙</h2>
+    <div class="concept-grid">
+      <div class="concept"><span class="icon">🗂️</span><b>JSON</b><p><code>{"이름": 값}</code> 모양으로 자료를 정리하는 형식. 파이썬 딕셔너리와 거의 똑같아요.</p></div>
+      <div class="concept"><span class="icon">🧾</span><b>문서 한 건 = 3칸</b><p><code>id</code> 번호 · <code>content</code> 사실(3인칭 2~3문장) · <code>keywords</code> 검색어 5~10개</p></div>
+      <div class="concept"><span class="icon">✅</span><b>좋은 자료의 조건</b><p>① 한 문서에 한 주제 ② ‘그는 ~했다’ 3인칭 ③ 친구들이 물을 법한 키워드</p></div>
+    </div>
+    <div class="example">🍳 <b>비유:</b> 자료집은 튜링의 <b>요리 재료</b>예요. 재료가 상하면(틀리면) 아무리 좋은 요리사(AI)도 맛있는 요리(정확한 답)를 못 만들어요.</div>
+    <p style="margin-top:12px"><b>실제 data.json의 문서 한 건</b></p>
+    <pre class="code"><code>{
+  "id": "T09",
+  "content": "장거리 달리기를 즐겼다. 마라톤 기록은 약 2시간 46분이었고, 1948년 올림픽 대표 선발에 도전했지만 부상으로 뜻을 이루지 못했다.",
+  "keywords": ["운동", "달리기", "마라톤", "육상", "올림픽", "취미", "체력", "건강", "기록"]
+}</code></pre>
+    <details class="faq">
+      <summary>왜 ‘그는 ~했다’처럼 3인칭으로 써요?</summary>
+      <p>app.py는 자료를 튜링에게 건네며 “자료의 ‘그’는 나 자신이다”라고 알려 줘요. 3인칭으로 써 두면 튜링이 자기 이야기로 자연스럽게 바꿔 말해요. ‘나는’으로 쓰면 학생 이야기인지 튜링 이야기인지 헷갈려요.</p>
+    </details>
+    <details class="faq">
+      <summary>keywords는 어디에 쓰여요?</summary>
+      <p><b>자료를 찾을 때만</b> 쓰여요. AI에게 건네지는 건 content뿐이에요. 친구가 “선생님 운동 좋아하세요?”라고 물으면, content에 ‘운동’이 없어도 keywords의 ‘운동’ 덕분에 T09를 찾을 수 있어요.</p>
+    </details>
+  </div>
+
+  <section>
+    <h2>👣 오늘 따라 할 단계</h2>
+    <div class="progress" id="progress"><i></i></div>
+    <div class="progress-label" id="progress-label"></div>
+    <ul class="steps">
+      <li class="step" data-id="compare"><span class="num"></span><div class="body">
+        <b class="title">자료가 있을 때와 없을 때 비교 보기 <span class="who teacher">선생님 화면</span></b>
+        <p>같은 질문에 튜링이 자료 없이 답할 때와 자료를 보고 답할 때 무엇이 다른지 관찰해요.</p></div></li>
+      <li class="step" data-id="split"><span class="num"></span><div class="body">
+        <b class="title">조사 노트를 주제별로 나누기 <span class="who team">모둠</span></b>
+        <p>생애 · 학창 시절 · 업적 · 취미 · 생각과 어록… 한 문서에 한 주제씩! 문서 번호(id)도 정해요.</p></div></li>
+      <li class="step" data-id="write"><span class="num"></span><div class="body">
+        <b class="title">아래 도구로 문서 쓰기 <span class="who me">나</span></b>
+        <p>content는 3인칭 2~3문장, keywords는 친구들이 실제로 쓸 말 5~10개. 날짜·장소·인물은 출처와 다시 대조해요.</p></div></li>
+      <li class="step" data-id="check"><span class="num"></span><div class="body">
+        <b class="title">JSON 검사기로 형식 확인하기 <span class="who team">모둠</span></b>
+        <p>모둠 문서를 모아 검사기에 붙여 넣고, 오류가 없을 때까지 고쳐요.</p></div></li>
+      <li class="step" data-id="submit"><span class="num"></span><div class="body">
+        <b class="title">선생님께 모둠 data.json 보내기 <span class="who teacher">선생님 화면</span></b>
+        <p>선생님이 서버에서 <code>python persona-core/app.py</code>를 실행하면 첫 줄에 <b>참고 자료 N건</b>이 나와요. 우리 문서 수만큼 늘었다면 성공!</p></div></li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>🛠️ 실습 1: 문서 만들기</h2>
+    <div class="tool" id="maker">
+      <label class="f">id (번호)</label>
+      <input type="text" id="mId" placeholder="예) T19" />
+      <label class="f">content (3인칭으로 2~3문장)</label>
+      <textarea id="mContent" placeholder="예) 그는 ~년에 ~했다. ~"></textarea>
+      <div id="mWarn" class="hint" style="font-size:0.88rem;margin-top:4px"></div>
+      <label class="f">keywords (쉼표로 구분, 5~10개)</label>
+      <input type="text" id="mKeys" placeholder="예) 운동, 달리기, 마라톤, 취미, 건강" />
+      <label class="f" style="margin-top:14px">✨ 자동으로 만들어진 JSON</label>
+      <pre class="code"><code id="mOut"></code></pre>
+      <div class="btn-row"><button class="btn ghost" type="button" id="mToChecker">↓ 검사기로 보내기</button></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>🔍 실습 2: JSON 형식 검사기</h2>
+    <p>모둠의 data.json 전체(또는 문서 한 건)를 붙여 넣고 <b>검사하기</b>를 눌러요.</p>
+    <div class="tool">
+      <textarea id="cIn" style="min-height:200px;font-family:'JetBrains Mono',monospace;font-size:0.86rem" placeholder='{ "documents": [ { "id": "T19", "content": "...", "keywords": ["..."] } ] }'></textarea>
+      <div class="btn-row"><button class="btn" type="button" id="cBtn">검사하기</button></div>
+      <div class="result" id="cOut" hidden></div>
+    </div>
+    <div class="warn-box">⚠️ <b>자주 하는 실수</b> — 작은따옴표 <code>'id'</code> ✘ · 마지막 항목 뒤 쉼표 <code>["a", "b",]</code> ✘ · 괄호 짝 안 맞음 <code>{ … </code> ✘</div>
+  </section>
+
+  <section class="seteuk" data-lesson="2"></section>
+
+  <nav class="pager">
+    <a href="lesson1.html"><small>← 이전 차시</small>1차시 · 페르소나 설계도</a>
+    <a class="next" href="lesson3.html"><small>다음 차시 →</small>3차시 · 튜링과 첫 대화</a>
+  </nav>
+</div>
+<footer class="site">정보 · 인공지능 기초 — 나만의 튜링 챗봇 만들기 · 2/5차시</footer>
+<script src="js/config.js"></script>
+<script src="js/common.js"></script>
+<script>
+(function () {
+  const $ = (id) => document.getElementById(id);
+  const KEY = "course.l2.maker";
+  const s = courseStore.get(KEY, {});
+  $("mId").value = s.id || ""; $("mContent").value = s.content || ""; $("mKeys").value = s.keys || "";
+  function doc() {
+    return {
+      id: $("mId").value.trim(),
+      content: $("mContent").value.trim(),
+      keywords: $("mKeys").value.split(/[,，]/).map((k) => k.trim()).filter(Boolean),
+    };
+  }
+  function build() {
+    const d = doc();
+    $("mOut").textContent = JSON.stringify(d, null, 2);
+    const warns = [];
+    if (/(^|\s)(나는|내가|저는|제가)/.test(d.content)) warns.push("‘나는/저는’ 대신 ‘그는’처럼 3인칭으로 써요.");
+    if (d.content && d.content.split(/[.!?。]/).filter((x) => x.trim()).length > 4) warns.push("문장이 길어요. 한 문서에 한 주제, 2~3문장이 좋아요.");
+    if (d.keywords.length && (d.keywords.length < 5 || d.keywords.length > 10)) warns.push(`키워드가 ${d.keywords.length}개예요. 5~10개가 좋아요.`);
+    $("mWarn").innerHTML = warns.length ? "⚠️ " + warns.join(" ") : (d.content ? "✓ 좋아요!" : "");
+    courseStore.set(KEY, { id: $("mId").value, content: $("mContent").value, keys: $("mKeys").value });
+  }
+  ["mId", "mContent", "mKeys"].forEach((id) => $(id).addEventListener("input", build));
+  build();
+  $("mToChecker").addEventListener("click", () => {
+    $("cIn").value = JSON.stringify({ documents: [doc()] }, null, 2);
+    $("cIn").scrollIntoView({ behavior: "smooth", block: "center" });
+  });
+
+  // 친절한 JSON 검사기
+  function lineOf(text, pos) { return text.slice(0, pos).split("\n").length; }
+  $("cBtn").addEventListener("click", () => {
+    const text = $("cIn").value;
+    const out = $("cOut");
+    const bad = (html) => { out.hidden = false; out.className = "result bad"; out.innerHTML = html; };
+    if (!text.trim()) return bad("검사할 내용을 붙여 넣어 주세요.");
+    // 흔한 실수를 먼저 찾아 알려 준다.
+    const single = text.match(/'[^'\n]*'\s*:/);
+    if (single) return bad(`❌ <b>${lineOf(text, single.index)}번째 줄</b>: 작은따옴표 <code>${esc(single[0])}</code>를 큰따옴표 " "로 바꿔요.`);
+    const trailing = text.match(/,\s*[}\]]/);
+    if (trailing) return bad(`❌ <b>${lineOf(text, trailing.index)}번째 줄</b>: 마지막 항목 뒤에 쉼표가 있어요. 지워 주세요.`);
+    const opens = (text.match(/[{[]/g) || []).length, closes = (text.match(/[}\]]/g) || []).length;
+    if (opens !== closes) return bad(`❌ 괄호 짝이 안 맞아요. 여는 괄호 ${opens}개, 닫는 괄호 ${closes}개예요.`);
+    let data;
+    try { data = JSON.parse(text); } catch (e) {
+      const m = String(e.message).match(/position (\d+)/);
+      return bad(`❌ JSON 형식 오류${m ? ` (<b>${lineOf(text, Number(m[1]))}번째 줄</b> 근처)` : ""}: ${esc(e.message)}<br>따옴표·쉼표·콜론(:)을 확인해요.`);
+    }
+    const docs = Array.isArray(data) ? data : (data.documents || (data.id ? [data] : null));
+    if (!Array.isArray(docs)) return bad('❌ <code>"documents": [ … ]</code> 목록이 없어요. app.py는 documents 목록을 읽어요.');
+    const problems = [];
+    const ids = new Set();
+    docs.forEach((d, i) => {
+      const tag = `${i + 1}번째 문서${d && d.id ? ` (${esc(d.id)})` : ""}`;
+      if (!d || typeof d !== "object") return problems.push(`${tag}: 문서는 { } 묶음이어야 해요.`);
+      ["id", "content", "keywords"].forEach((k) => { if (!(k in d)) problems.push(`${tag}: <code>${k}</code> 칸이 없어요.`); });
+      if (d.id && ids.has(d.id)) problems.push(`${tag}: id가 다른 문서와 겹쳐요.`);
+      ids.add(d.id);
+      if ("keywords" in d && !Array.isArray(d.keywords)) problems.push(`${tag}: keywords는 [ ] 목록이어야 해요.`);
+      if (typeof d.content === "string" && /(^|\s)(나는|내가|저는|제가)/.test(d.content)) problems.push(`${tag}: content를 3인칭(‘그는’)으로 바꿔 보세요. (권장)`);
+    });
+    out.hidden = false;
+    if (problems.length) { out.className = "result bad"; out.innerHTML = "형식은 맞지만 확인할 점이 있어요:<ul>" + problems.map((p) => `<li>${p}</li>`).join("") + "</ul>"; }
+    else { out.className = "result ok"; out.innerHTML = `🎉 <b>통과!</b> 문서 ${docs.length}건이 모두 올바른 형식이에요. 선생님께 보내요.`; }
+  });
+})();
+</script>
+</body>
+</html>

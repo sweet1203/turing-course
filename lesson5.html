@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>5차시 · 로블록스 NPC 공개와 상호 평가 | 나만의 튜링 챗봇</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Jua&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/common.css">
+<style>
+  .pipe { display: flex; flex-wrap: wrap; align-items: stretch; gap: 8px; justify-content: center; margin: 12px 0; }
+  .pipe .node { flex: 1 1 150px; max-width: 200px; background: #fff; border: 2px solid var(--border); border-radius: 14px; padding: 10px; text-align: center; }
+  .pipe .node .e { font-size: 1.8rem; display: block; }
+  .pipe .node b { font-family: 'Jua', sans-serif; font-weight: 400; display: block; color: var(--primary-dark); }
+  .pipe .node small { color: var(--text-light); font-size: 0.82rem; line-height: 1.4; display: block; }
+  .pipe .arr { align-self: center; color: var(--primary); font-weight: bold; font-size: 1.2rem; }
+  table.eval select { padding: 4px 6px; border-width: 1px; }
+  table.eval input[type=text] { padding: 4px 6px; border-width: 1px; }
+  table.eval td.sum { font-family: 'Jua', sans-serif; color: var(--primary-dark); text-align: center; font-size: 1.1rem; }
+  @media (max-width: 640px) { .pipe .arr { display: none; } }
+</style>
+</head>
+<body data-page="5">
+<div class="container">
+
+  <header class="page-header">
+    <span class="badge">5차시 · 인공지능 프로젝트</span>
+    <h1>🎮 튜링 NPC 공개와 상호 평가</h1>
+    <p>우리 튜링을 로블록스 게임에 연결하고, 서로의 튜링을 평가해요.</p>
+  </header>
+
+  <section>
+    <h2>🎯 오늘의 목표</h2>
+    <ul class="goals">
+      <li data-n="1">완성한 페르소나를 <b>웹 채팅이나 로블록스 NPC</b>로 연결해 실행할 수 있다.</li>
+      <li data-n="2">평가 기준에 따라 다른 모둠의 페르소나를 <b>평가하고 피드백</b>할 수 있다.</li>
+      <li data-n="3">비판적 자세로 <b>인간과 AI의 공존</b> 방안을 제시할 수 있다.</li>
+    </ul>
+    <div class="flow">
+      <div class="flow-step"><b>도입</b><span>같은 튜링을 터미널·웹·게임에서 만난다면?</span></div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step"><b>전개</b><span>로블록스 연결 → 모둠별 대화 → ‘튜링다움’ 평가</span></div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step"><b>정리</b><span>인물 AI 사용 약속, 프로젝트 성찰</span></div>
+    </div>
+  </section>
+
+  <div class="intro-card">
+    <h2>💡 개념 쏙쏙: 질문 하나가 오가는 길</h2>
+    <div class="pipe">
+      <div class="node"><span class="e">🙋</span><b>로블록스 화면</b><small>입력칸에 질문 쓰고 보내기</small></div><span class="arr">→</span>
+      <div class="node"><span class="e">🧱</span><b>게임 서버(Luau)</b><small>질문을 VESSL 주소로 보내기</small></div><span class="arr">→</span>
+      <div class="node"><span class="e">🍳</span><b>VESSL 채팅 서버</b><small>자료 찾기 + 역할 설명서 + 대화 기억</small></div><span class="arr">→</span>
+      <div class="node"><span class="e">🧠</span><b>EXAONE 모델</b><small>GPU에서 튜링의 답 만들기</small></div><span class="arr">→</span>
+      <div class="node"><span class="e">💬</span><b>NPC 말풍선</b><small>필터를 거쳐 머리 위에 표시</small></div>
+    </div>
+    <div class="example">🍽️ <b>식당 비유:</b> 주방(<b>서버</b>)에서는 요리사(<b>EXAONE</b>)가 요리해요. 손님 자리(<b>클라이언트</b>)는 터미널·웹·로블록스예요. 손님은 주방에 들어가지 않고 <b>주문서(API)</b>로 주문하고 음식을 받아요. 그래서 화면이 셋이어도 요리사와 레시피(app.py · data.json)는 하나예요!</div>
+    <details class="faq">
+      <summary>포트 7860, /ready는 뭐예요?</summary>
+      <p><b>포트</b>는 한 컴퓨터 안의 ‘문 번호’예요. 모델 서버는 8000번 문, 웹·로블록스 서버는 7860번 문에서 손님을 받아요.</p>
+      <p>선생님이 서버 주소 뒤에 <code>/ready</code>를 붙여 열었을 때 <code>{"ready": true}</code>가 보이면 모델까지 연결 준비가 끝난 거예요.</p>
+    </details>
+    <details class="faq">
+      <summary>Luau는 어떤 언어예요? 텍스트 필터는 왜 거쳐요?</summary>
+      <p><b>Luau</b>는 로블록스 게임 안에서 돌아가는 프로그래밍 언어예요. 플레이어의 말을 VESSL 서버로 보내고, 받은 답을 NPC 말풍선으로 보여 줘요.</p>
+      <p>로블록스는 게임에 보이는 모든 글을 <b>텍스트 필터</b>로 검사해요. AI가 만든 문장도 예외가 아니에요. 부적절한 말이 그대로 보이지 않게 하는 안전장치예요.</p>
+    </details>
+  </div>
+
+  <section>
+    <h2>👣 오늘 따라 할 단계</h2>
+    <div class="progress" id="progress"><i></i></div>
+    <div class="progress-label" id="progress-label"></div>
+    <ul class="steps">
+      <li class="step" data-id="ready"><span class="num"></span><div class="body">
+        <b class="title">서버 준비 확인하기 <span class="who teacher">선생님 화면</span></b>
+        <p>선생님이 우리 모둠의 app.py · data.json으로 서버를 켜고, 주소 뒤에 <code>/ready</code>를 붙여 <code>{"ready": true}</code>를 보여 줘요.</p></div></li>
+      <li class="step" data-id="roblox"><span class="num"></span><div class="body">
+        <b class="title">로블록스에서 튜링 NPC 만나기 <span class="who teacher">선생님 화면</span></b>
+        <p>Roblox Studio에서 <b>Play</b>를 누르고, 화면 아래 입력칸에 첫인사를 써요. 튜링 머리 위에 말풍선이 뜨면 성공!</p></div></li>
+      <li class="step" data-id="check4"><span class="num"></span><div class="body">
+        <b class="title">4차시에 고친 내용 확인하기 <span class="who team">모둠</span></b>
+        <p>4차시에 틀렸던 질문을 다시 해 봐요. 고친 내용이 게임에서도 그대로 반영됐나요?</p></div></li>
+      <li class="step" data-id="eval"><span class="num"></span><div class="body">
+        <b class="title">다른 모둠 튜링과 3분씩 대화하고 평가하기 <span class="who me">나</span></b>
+        <p>질문은 돌아가며 한 명씩! 아래 평가표에 기준별 1~5점과 근거를 적어요.</p></div></li>
+      <li class="step" data-id="promise"><span class="num"></span><div class="body">
+        <b class="title">우리 반 ‘인물 AI 사용 약속’ 만들기 <span class="who team">모둠</span></b>
+        <p>실존 인물 AI, 어디까지 괜찮을까? 약속 3가지를 정해 발표해요.</p></div></li>
+    </ul>
+    <details class="faq">
+      <summary>🧑‍🏫 선생님 화면에서는 무슨 일이 일어나요? (궁금한 학생만)</summary>
+      <ol>
+        <li>VESSL 터미널 1에서 <b>모델 서버</b>(8000번 문)를 켜요.</li>
+        <li>터미널 2에서 <b>로블록스용 채팅 서버</b>(7860번 문)를 켜요.</li>
+        <li>Roblox Studio의 <code>ServerScriptService → PersonaChatServer</code> 스크립트의 <code>PersonaApiUrl</code> 속성에 VESSL 주소를 넣어요.</li>
+        <li><b>HTTP 요청 허용</b>을 켜고 Play!</li>
+      </ol>
+      <pre class="code"><code>WEB_HOST=0.0.0.0 WEB_PORT=7860 python roblox-chat/vessl-server/server.py</code></pre>
+    </details>
+  </section>
+
+  <section>
+    <h2>📊 실습: ‘튜링다움’ 상호 평가표</h2>
+    <div class="concept-grid" style="margin-bottom:12px">
+      <div class="concept"><b>✅ 사실 정확성</b><p>생애와 업적을 자료와 맞게 말하나요?</p></div>
+      <div class="concept"><b>🗣️ 말투 일관성</b><p>다정한 반말을 끝까지 지키나요?</p></div>
+      <div class="concept"><b>⏳ 시대 한계</b><p>1952년 이후의 일(스마트폰, 챗GPT)은 모른다고 하나요?</p></div>
+      <div class="concept"><b>🙅 거절 규칙</b><p>사생활 질문에는 정한 문장으로만 답하나요?</p></div>
+    </div>
+    <div class="table-scroll"><table class="t eval" id="evalTable">
+      <thead><tr><th>모둠</th><th>사실</th><th>말투</th><th>시대</th><th>거절</th><th>합계</th><th>근거 (한 줄)</th></tr></thead>
+      <tbody></tbody>
+    </table></div>
+    <div class="btn-row"><button class="btn ghost" type="button" id="addRow">+ 모둠 추가</button></div>
+    <div class="warn-box">🙏 사생활 질문은 ‘거절 규칙’을 확인할 때 <b>한 번만</b> 해요. 일부러 캐묻는 건 실존 인물에 대한 예의가 아니에요.</div>
+  </section>
+
+  <section>
+    <h2>🤝 정리: 우리 반 인물 AI 사용 약속</h2>
+    <div class="tool" id="promise">
+      <label class="f">약속 1</label><input type="text" placeholder="예) AI 인물의 말은 실제 인물의 말이 아님을 꼭 밝힌다." />
+      <label class="f">약속 2</label><input type="text" />
+      <label class="f">약속 3</label><input type="text" />
+    </div>
+  </section>
+
+  <section class="seteuk" data-lesson="5"></section>
+
+  <div class="cta">
+    <h3>🎉 5차시 프로젝트 완주!</h3>
+    <p>튜링의 질문 “기계는 생각할 수 있을까?”에 이제 나만의 답을 말할 수 있나요?</p>
+    <a class="btn" href="index.html">🏠 처음으로</a>
+  </div>
+
+  <nav class="pager">
+    <a href="lesson4.html"><small>← 이전 차시</small>4차시 · 환각 찾고 고치기</a>
+    <a class="next" href="index.html"><small>처음으로 →</small>홈</a>
+  </nav>
+</div>
+<footer class="site">정보 · 인공지능 기초 — 나만의 튜링 챗봇 만들기 · 5/5차시</footer>
+<script src="js/config.js"></script>
+<script src="js/common.js"></script>
+<script>
+(function () {
+  const KEY = "course.l5.eval";
+  let rows = courseStore.get(KEY, null) || [1, 2, 3, 4].map((n) => ({ team: `${n}모둠`, s: ["", "", "", ""], why: "" }));
+  const tbody = document.querySelector("#evalTable tbody");
+  const opt = (v) => ['<option value="">-</option>', ...[1, 2, 3, 4, 5].map((n) => `<option ${String(n) === String(v) ? "selected" : ""}>${n}</option>`)].join("");
+  function render() {
+    tbody.innerHTML = rows.map((r, i) => `<tr data-i="${i}">
+      <td><input type="text" data-f="team" value="${esc(r.team)}" style="width:90px" /></td>
+      ${r.s.map((v, k) => `<td><select data-f="s" data-k="${k}">${opt(v)}</select></td>`).join("")}
+      <td class="sum">${r.s.reduce((a, b) => a + (Number(b) || 0), 0)}</td>
+      <td><input type="text" data-f="why" value="${esc(r.why)}" placeholder="예) 스마트폰을 몰라서 시대 한계 5점" /></td></tr>`).join("");
+  }
+  tbody.addEventListener("input", (e) => {
+    const tr = e.target.closest("tr"); if (!tr) return;
+    const r = rows[Number(tr.dataset.i)];
+    if (e.target.dataset.f === "s") { r.s[Number(e.target.dataset.k)] = e.target.value; tr.querySelector(".sum").textContent = r.s.reduce((a, b) => a + (Number(b) || 0), 0); }
+    else r[e.target.dataset.f] = e.target.value;
+    courseStore.set(KEY, rows);
+  });
+  document.getElementById("addRow").addEventListener("click", () => { rows.push({ team: `${rows.length + 1}모둠`, s: ["", "", "", ""], why: "" }); courseStore.set(KEY, rows); render(); });
+  render();
+
+  const P = "course.l5.promise";
+  const inputs = [...document.querySelectorAll("#promise input")];
+  const saved = courseStore.get(P, []);
+  inputs.forEach((el, i) => { el.value = saved[i] || ""; el.addEventListener("input", () => courseStore.set(P, inputs.map((x) => x.value))); });
+})();
+</script>
+</body>
+</html>
