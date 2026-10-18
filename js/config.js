@@ -6,7 +6,7 @@
 window.COURSE = {
   // ① Apps Script 웹 앱 주소 (배포 후 받은 https://script.google.com/macros/s/..../exec 주소)
   //    비워 두면 학생 화면에 "아직 제출을 받을 수 없어요"라고 표시됩니다.
-  APPS_SCRIPT_URL: "",
+  APPS_SCRIPT_URL: "https://script.google.com/macros/s/AKfycbxNc_8GIh92jOyU_IkylgWniOIUzzMPV0JJhSuWrJgm5fDKn3kZJE_We69Ab7mMDhg0/exec",
 
   // ② 학번 형식 (기본: 숫자 5자리, 예: 20315 = 2학년 3반 15번)
   STUDENT_ID_PATTERN: "^[0-9]{5}$",

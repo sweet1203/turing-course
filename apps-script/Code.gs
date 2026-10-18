@@ -92,7 +92,8 @@ function setupSheets() {
     var s = ss.getSheetByName(name);
     if (s && ss.getSheets().length > 1 && s.getLastRow() === 0) ss.deleteSheet(s);
   });
-  SpreadsheetApp.getActive().toast('1~5차시 탭을 준비했어요!', '세특 질문', 5);
+  // 학생 제출(웹 앱)에서 자동으로 불렸을 때는 화면이 없어 알림이 실패할 수 있으므로 무시한다.
+  try { ss.toast('1~5차시 탭을 준비했어요!', '세특 질문', 5); } catch (e) {}
 }
 
 /** 스프레드시트를 열 때 위쪽 메뉴에 '세특 질문' 메뉴를 추가합니다. */
