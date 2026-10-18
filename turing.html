@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>앨런 튜링 소개 | 나만의 튜링 챗봇</title>
+<meta name="description" content="우리가 페르소나 AI로 되살릴 앨런 튜링, 그리고 인공지능과 튜링 테스트 이야기">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Jua&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/common.css?v=4">
+<style>
+  .timeline { list-style: none; margin: 8px 0 0; padding: 0 0 0 18px; border-left: 3px dashed var(--border); }
+  .timeline li { position: relative; margin: 0 0 14px; padding-left: 8px; }
+  .timeline li::before { content: ""; position: absolute; left: -27px; top: 6px; width: 14px; height: 14px; border-radius: 50%; background: var(--primary); border: 3px solid #fff; box-shadow: 0 0 0 2px var(--primary); }
+  .timeline li.now::before { background: var(--secondary); box-shadow: 0 0 0 2px var(--secondary); }
+  .timeline .y { font-family: 'Jua', sans-serif; color: var(--primary-dark); margin-right: 6px; }
+  .timeline li.now .y { color: var(--secondary); }
+  .game { display: grid; grid-template-columns: 1fr auto 1fr; gap: 10px; align-items: center; margin: 12px 0; }
+  .game .wall { display: grid; gap: 10px; }
+  .game .player { display: block; text-align: center; border: 2px solid var(--border); border-radius: 14px; padding: 12px; background: #fff; font-size: 0.95rem; }
+  .game .player b { display: block; font-family: 'Jua', sans-serif; font-weight: 400; font-size: 1.05rem; color: var(--primary-dark); }
+  .game .player .icon { font-size: 1.8rem; display: block; }
+  .game .wire { font-family: 'Jua', sans-serif; color: var(--secondary); text-align: center; font-size: 0.9rem; max-width: 6em; margin: 0 auto; }
+  @media (max-width: 640px) { .game { grid-template-columns: 1fr; } .game .wire { max-width: none; } }
+</style>
+</head>
+<body data-page="turing">
+<div class="container">
+
+  <header class="page-header">
+    <span class="badge">도입 자료 · 1차시 전에 함께 봐요</span>
+    <h1>🎩 앨런 튜링 소개</h1>
+    <p>“기계는 생각할 수 있을까?” — 이 질문을 처음 던진 사람을 만나 봐요.</p>
+  </header>
+
+  <div class="intro-card">
+    <h2>🤖 우리가 AI로 되살릴 사람</h2>
+    <p>이번 프로젝트에서 우리는 <b>앨런 튜링</b>이라는 사람을 <b>페르소나 AI</b>로 설정할 거예요.
+      AI에게 <b>“너는 1952년 3월 31일 아침의 앨런 튜링이야”</b>라는 역할 설명서를 주고, 튜링의 삶을 담은 자료집을 만들어
+      튜링처럼 생각하고 말하는 챗봇을 완성해요.</p>
+    <p>그러려면 먼저 <b>튜링이 어떤 사람인지</b> 알아야겠죠? 영상을 보고, 아래 내용을 읽으며 우리 튜링의 모습을 떠올려 봐요.</p>
+  </div>
+
+  <section>
+    <h2>🎬 도입 영상: 앨런 튜링은 어떤 사람일까?</h2>
+    <div class="video"><iframe src="https://www.youtube.com/embed/gfqrklSgXls?rel=0" title="앨런 튜링, 영화 이미테이션 게임의 주인공 (매스프레소)" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+    <p class="video-cap">매스프레소 MathPresso · 「앨런 튜링, 영화 “이미테이션 게임”의 주인공 (7분 완성)」 · 7분 44초</p>
+    <div class="tip">👀 <b>보면서 찾아봐요</b><br>① 튜링이 만든 ‘컴퓨터의 원리’는 무엇일까요? ② 전쟁 중에 튜링은 어떤 일을 했나요? ③ 튜링이 던진 질문은 무엇이었나요?</div>
+  </section>
+
+  <section>
+    <h2>✨ 이런 걸 만들어요: AI로 되살아난 튜링</h2>
+    <p>실제로 앨런 튜링을 AI로 되살려 수업을 한 사례가 있어요. 우리도 5차시 동안 <b>우리 모둠만의 튜링</b>을 만들어 대화하고, 로블록스 게임 속 NPC로 만나요.</p>
+    <div class="btn-row">
+      <a class="btn ghost" href="https://www.youtube.com/watch?v=6g9OqCRqptk" target="_blank" rel="noopener">▶ EBS 「AI로 부활한 AI의 아버지 ‘앨런 튜링’」 (1분 51초)</a>
+      <a class="btn ghost" href="https://www.youtube.com/watch?v=OREFx_iGsnk" target="_blank" rel="noopener">▶ YTN 사이언스 「컴퓨터와 인공지능의 아버지, 앨런 튜링」 (2분 19초)</a>
+    </div>
+    <p class="video-cap">이 두 영상은 다른 사이트 안에서 재생할 수 없어서 유튜브 새 창으로 열려요.</p>
+  </section>
+
+  <section>
+    <h2>🧑‍🔬 앨런 튜링은 누구일까?</h2>
+    <p>영국의 수학자이자 <b>컴퓨터 과학과 인공지능의 아버지</b>라고 불리는 사람이에요.</p>
+    <ul class="timeline">
+      <li><span class="y">1912년</span>영국 런던에서 태어났어요.</li>
+      <li><span class="y">1926년</span>총파업으로 기차가 멈추자, 셔번 학교까지 약 97km를 <b>자전거로</b> 달려 등교했어요. 달리기도 무척 좋아했어요.</li>
+      <li><span class="y">1936년</span>논문 「계산 가능한 수에 관하여」에서 <b>튜링 기계</b>를 생각해 냈어요. 테이프 위의 기호를 규칙대로 읽고 쓰는 상상의 기계로, 오늘날 <b>모든 컴퓨터의 원리</b>가 되었어요.</li>
+      <li><span class="y">1939~1945년</span>제2차 세계대전 중 블레츨리 파크에서 독일군의 <b>에니그마 암호</b>를 푸는 일에 앞장섰어요.</li>
+      <li><span class="y">1950년</span>논문 「계산 기계와 지능」에서 <b>“기계는 생각할 수 있을까?”</b>라는 질문과 함께 <b>모방 게임</b>을 제안했어요.</li>
+      <li class="now"><span class="y">1952년 3월 31일 아침</span>👉 <b>우리 튜링의 시점!</b> 우리 챗봇은 이 날 아침의 튜링이에요. 그래서 그 뒤의 일(스마트폰, 챗GPT, 자신의 미래)은 몰라요.</li>
+    </ul>
+    <div class="example">💬 <b>오늘날의 튜링</b> — 컴퓨터 과학의 노벨상이라 불리는 상의 이름이 <b>튜링상</b>이고, 영국 50파운드 지폐에 튜링의 얼굴이 실렸어요.
+      하지만 1952년의 우리 튜링은 이런 일을 알 수 없어요. 물어보면 어떻게 답해야 할까요?</div>
+  </section>
+
+  <section>
+    <h2>🧠 인공지능이란?</h2>
+    <div class="concept-grid">
+      <div class="concept"><span class="icon">💡</span><b>인공지능 (AI)</b><p>사람처럼 <b>배우고, 판단하고, 문제를 해결하는</b> 능력을 컴퓨터로 만든 것이에요.</p></div>
+      <div class="concept"><span class="icon">⌨️</span><b>대화형 AI (언어 모델)</b><p>엄청나게 많은 글을 학습해서, 휴대폰 자판 추천처럼 <b>가장 그럴듯한 다음 단어</b>를 이어 붙여 답을 만들어요.</p></div>
+      <div class="concept"><span class="icon">🎭</span><b>페르소나 AI</b><p>AI에게 <b>역할 설명서</b>(시스템 프롬프트)를 주어 특정 인물처럼 말하게 만든 AI. 우리는 튜링의 역할 설명서와 자료집을 만들어요.</p></div>
+    </div>
+    <div class="tip">⚠️ 언어 모델은 정답을 ‘아는’ 게 아니라 그럴듯하게 이어 쓰기 때문에, 모르는 것도 지어낼 수 있어요(환각). 그래서 우리는 튜링의 <b>자료집을 찾아보고 답하는 AI</b>를 만들어요.</div>
+  </section>
+
+  <section>
+    <h2>🎭 튜링 테스트 (모방 게임)</h2>
+    <p>1950년 튜링은 “기계가 생각하는가?”를 직접 따지기 어려우니, <b>대화로 시험해 보자</b>고 제안했어요.</p>
+    <div class="game" aria-label="모방 게임 구조">
+      <span class="player"><span class="icon">🕵️</span><b>질문하는 사람</b>글로만 질문해요</span>
+      <span class="wire">⌨️ 글로만 주고받기 ⇄</span>
+      <div class="wall">
+        <span class="player"><span class="icon">🙋</span><b>사람</b>칸막이 뒤에서 답해요</span>
+        <span class="player"><span class="icon">🤖</span><b>기계</b>칸막이 뒤에서 답해요</span>
+      </div>
+    </div>
+    <div class="video"><iframe src="https://www.youtube.com/embed/iSy5k9e9Tiw?rel=0" title="AI CAN DO! 이해하기 - AI와 튜링테스트 (부산광역시교육청)" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+    <p class="video-cap">부산광역시교육청 · 「AI CAN DO! 이해하기 - AI와 튜링테스트」 · 2분 36초</p>
+    <p>얼굴도 목소리도 없이 <b>글로만</b> 대화해서, 질문하는 사람이 누가 기계인지 잘 구별하지 못한다면 그 기계는 ‘생각한다’고 볼 수 있지 않을까? 이것이 <b>모방 게임</b>이고, 나중에 사람들이 <b>튜링 테스트</b>라고 불렀어요.</p>
+    <details class="faq">
+      <summary>오늘날의 챗봇은 튜링 테스트를 통과했을까요?</summary>
+      <p>요즘 챗봇은 사람처럼 자연스럽게 대화해서, 짧은 대화로는 구별이 어려운 경우가 많아요. 그렇다면 챗봇은 정말 ‘생각’하는 걸까요, 아니면 그럴듯하게 <b>흉내</b>만 내는 걸까요? 1차시에 투표로 이야기해 봐요.</p>
+    </details>
+    <details class="faq">
+      <summary>우리 튜링 챗봇에게 “튜링 테스트가 뭐예요?”라고 물으면?</summary>
+      <p>1952년의 튜링은 ‘튜링 테스트’라는 이름을 몰라요. 그래서 “그런 이름은 처음 듣지만 내 모방 게임을 말하는 것 같구나”라고 답하게 만들 거예요.</p>
+    </details>
+  </section>
+
+  <section>
+    <h2>🔗 우리 수업과 이렇게 이어져요</h2>
+    <div class="table-scroll"><table class="t">
+      <tr><th>튜링의 생각</th><th>우리가 하는 일</th><th>차시</th></tr>
+      <tr><td>“기계는 생각할 수 있을까?”</td><td>튜링을 조사해 시점 · 말투 · 모르는 것 · 답하지 않을 것을 정한 <b>설계도</b> 만들기</td><td><a href="lesson1.html">1차시</a></td></tr>
+      <tr><td>기계는 규칙과 기록(테이프)으로 일한다</td><td>튜링의 기억이 될 <b>자료집 data.json</b> 만들기</td><td><a href="lesson2.html">2차시</a></td></tr>
+      <tr><td>글로만 대화하는 모방 게임</td><td>터미널에서 우리 튜링과 <b>글로 대화</b>하기 (찾아보고 답하는 AI)</td><td><a href="lesson3.html">3차시</a></td></tr>
+      <tr><td>기계도 실수에서 배운다</td><td>튜링이 지어낸 답(<b>환각</b>)을 찾아 근거로 고치기</td><td><a href="lesson4.html">4차시</a></td></tr>
+      <tr><td>사람과 구별할 수 있을까?</td><td>로블록스 NPC로 공개하고 ‘<b>튜링다움</b>’ 서로 평가하기</td><td><a href="lesson5.html">5차시</a></td></tr>
+    </table></div>
+  </section>
+
+  <div class="cta">
+    <h3>🚀 이제 우리 튜링을 설계해 볼까요?</h3>
+    <p>“너는 1952년 3월 31일 아침의 앨런 튜링이야.” 이 한 문장에서 시작해요.</p>
+    <a class="btn" href="lesson1.html">📐 1차시 시작하기</a>
+  </div>
+</div>
+<footer class="site">정보 · 인공지능 기초 — 나만의 튜링 챗봇 만들기 · 도입 자료</footer>
+<script src="js/config.js?v=4"></script>
+<script src="js/common.js?v=4"></script>
+</body>
+</html>

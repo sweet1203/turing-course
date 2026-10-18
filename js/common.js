@@ -14,6 +14,7 @@
     const page = document.body.dataset.page || "";
     const links = [
       ["index.html", "home", "홈"],
+      ["turing.html", "turing", "앨런 튜링"],
       ["lesson1.html", "1", "1차시"],
       ["lesson2.html", "2", "2차시"],
       ["lesson3.html", "3", "3차시"],
